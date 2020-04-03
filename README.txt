@@ -9,11 +9,13 @@
 Как потестить:
 	1. Ставим PostgreSQL v.12.2  https://www.enterprisedb.com/downloads/postgres-postgresql-downloads
 	2. Качаем репу  https://github.com/00MRX00/StaskNew.git
-	3. Запускаем консоль, переходим в скачанный репозиторий -> StaskNew
+	3. Запускаем консоль, переходим в скачанный репозиторий
 	4. Выполняем команды:
-		1)  python manager.py makemigrations
-		2) python manage.py migrate
-		3) python manage.py runserver
+		1) pipenv shell
+		2) cd StaskNew
+		3) python manager.py makemigrations
+		4) python manager.py migrate
+		5) python manager.py runserver
 	5. Сайт запустится по адресу http://localhost:8000/
      
      Для проверки API:
