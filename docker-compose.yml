@@ -4,7 +4,7 @@ services:
   web:
     build: .
     restart: always
-    command: bash -c "python StaskNew/manage.py migrate && python StaskNew/manage.py runserver 0.0.0.0:8000 & npm run dev"
+    command: bash -c "python StaskNew/manage.py migrate && python StaskNew/manage.py runserver 0.0.0.0:8000"
     volumes:
       - .:/code
     ports:
