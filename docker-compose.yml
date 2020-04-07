@@ -4,7 +4,7 @@ services:
   web:
     build: .
     restart: always
-    command: python StaskNew/manage.py runserver 0.0.0.0:8000
+    command: bash -c "python StaskNew/manage.py migrate && python StaskNew/manage.py runserver 0.0.0.0:8000 & npm run dev"
     volumes:
       - .:/code
     ports:
@@ -18,3 +18,4 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: admin
       POSTGRES_DB: StaskNew
+      
