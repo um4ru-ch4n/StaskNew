@@ -7,15 +7,12 @@
 	Здесь лежит фронтенд (как не странно), написанный на react redux.
 
 Как потестить:
-	1. Ставим PostgreSQL v.12.2  https://www.enterprisedb.com/downloads/postgres-postgresql-downloads
+	1. Ставим docker https://hub.docker.com/editions/community/docker-ce-desktop-windows/
 	2. Качаем репу  https://github.com/00MRX00/StaskNew.git
 	3. Запускаем консоль, переходим в скачанный репозиторий
 	4. Выполняем команды:
-		1) pipenv shell
-		2) cd StaskNew
-		3) python manager.py makemigrations
-		4) python manager.py migrate
-		5) python manager.py runserver
+		1) docker-compose run web python StaskNew/manage.py migrate
+		2) docker-compose up
 	5. Сайт запустится по адресу http://localhost:8000/
      
      Для проверки API:
