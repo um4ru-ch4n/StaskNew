@@ -1,7 +1,7 @@
 from rest_framework import generics, permissions, viewsets
 from rest_framework.response import Response
 from knox.models import AuthToken
-from .serializers import UserSerializer, RegisterSerializer, LoginSerializer, AccountSerializer
+from .serializers import UserSerializer, RegisterSerializer, LoginSerializer
 from .models import Account
 
 # Register API
@@ -50,4 +50,4 @@ class UsersListView(viewsets.ReadOnlyModelViewSet):
     ]
 
     queryset = Account.objects.all()
-    serializer_class = AccountSerializer
+    serializer_class = UserSerializer

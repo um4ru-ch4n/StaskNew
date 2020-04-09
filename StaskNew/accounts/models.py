@@ -1,8 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
+import sys
+sys.path.append('../')
+from projects.models import Task, ProjectUsersTypes, Project
+
 class AccountManager(BaseUserManager):
-    def create_user(self, username, email, first_name="", last_name="", patronymic="", password=None):
+    def create_user(self, username, email, first_name="", last_name="", patronymic="", tasks=[], password=None):
         if not email:
             raise ValueError("Users must have an email address")
         if not username:
@@ -14,6 +18,7 @@ class AccountManager(BaseUserManager):
             first_name=first_name,
             last_name=last_name,
             patronymic=patronymic,
+            tasks=tasks,
             )
 
         user.set_password(password)
@@ -49,6 +54,7 @@ class Account(AbstractBaseUser):
     first_name = models.CharField('Имя пользователя', max_length = 50)
     last_name = models.CharField('Фамилия пользователя', max_length = 50)
     patronymic = models.CharField('Отчество пользователя', max_length = 50)
+    tasks = models.ManyToManyField(Task)
 	
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
@@ -68,3 +74,16 @@ class Account(AbstractBaseUser):
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'
 
+
+class ProjectUsers(models.Model):
+    id = models.AutoField(primary_key=True)
+    user = models.ForeignKey(Account, on_delete=models.CASCADE)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    user_type = models.ForeignKey(ProjectUsersTypes, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.user) + " - " + str(self.project) + " - " + str(self.user_type)
+    
+    class Meta:
+        verbose_name = 'Пользователь/Проект/Тип'
+        verbose_name_plural = 'Пользователи/Проекты/Типы'
