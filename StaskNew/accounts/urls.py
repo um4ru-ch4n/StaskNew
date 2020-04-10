@@ -6,6 +6,7 @@ from rest_framework import routers
 
 router = routers.DefaultRouter()
 router.register('api/users', api.UsersListView)
+router.register('api/projectusers', api.ProjectUsersView)
 
 urlpatterns = [
     path('api/auth', include('knox.urls')),

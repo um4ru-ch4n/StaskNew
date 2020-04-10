@@ -6,7 +6,7 @@ sys.path.append('../')
 from projects.models import Task, ProjectUsersTypes, Project
 
 class AccountManager(BaseUserManager):
-    def create_user(self, username, email, first_name="", last_name="", patronymic="", tasks=[], password=None):
+    def create_user(self, username, email, first_name="", last_name="", patronymic="", password=None):
         if not email:
             raise ValueError("Users must have an email address")
         if not username:
@@ -18,7 +18,6 @@ class AccountManager(BaseUserManager):
             first_name=first_name,
             last_name=last_name,
             patronymic=patronymic,
-            tasks=tasks,
             )
 
         user.set_password(password)
@@ -51,10 +50,10 @@ class Account(AbstractBaseUser):
     is_superuser = models.BooleanField(default=False)
 
     # Custom fields
-    first_name = models.CharField('Имя пользователя', max_length = 50)
-    last_name = models.CharField('Фамилия пользователя', max_length = 50)
-    patronymic = models.CharField('Отчество пользователя', max_length = 50)
-    tasks = models.ManyToManyField(Task)
+    first_name = models.CharField('Имя пользователя', max_length = 50, blank=True)
+    last_name = models.CharField('Фамилия пользователя', max_length = 50, blank=True)
+    patronymic = models.CharField('Отчество пользователя', max_length = 50, blank=True)
+    tasks = models.ManyToManyField(Task, blank=True)
 	
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']

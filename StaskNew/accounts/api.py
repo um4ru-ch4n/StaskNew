@@ -1,8 +1,8 @@
 from rest_framework import generics, permissions, viewsets
 from rest_framework.response import Response
 from knox.models import AuthToken
-from .serializers import UserSerializer, RegisterSerializer, LoginSerializer
-from .models import Account
+from .serializers import UserSerializer, RegisterSerializer, LoginSerializer, ProjectUsersSerializer
+from .models import Account, ProjectUsers
 
 # Register API
 class RegisterAPI(generics.GenericAPIView):
@@ -14,7 +14,6 @@ class RegisterAPI(generics.GenericAPIView):
         user = serializer.save()
         return Response({
             "user": UserSerializer(user, context = self.get_serializer_context()).data,
-            "token": AuthToken.objects.create(user)[1]
         })
 
 # Login API
@@ -51,3 +50,12 @@ class UsersListView(viewsets.ReadOnlyModelViewSet):
 
     queryset = Account.objects.all()
     serializer_class = UserSerializer
+
+
+class ProjectUsersView(viewsets.ReadOnlyModelViewSet):
+    permission_classes = [
+        permissions.IsAuthenticated,
+    ]
+
+    queryset = ProjectUsers.objects.all()
+    serializer_class = ProjectUsersSerializer

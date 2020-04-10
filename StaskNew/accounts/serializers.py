@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Account
+from .models import Account, ProjectUsers
 from django.contrib.auth import authenticate
 
 # Account Serializer
@@ -32,3 +32,10 @@ class LoginSerializer(serializers.Serializer):
         if user and user.is_active:
             return user
         raise serializers.ValidationError("Неверные учетные данные")
+
+
+
+class ProjectUsersSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProjectUsers
+        fields = '__all__'
