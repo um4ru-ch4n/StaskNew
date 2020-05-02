@@ -1,4 +1,5 @@
-node_modules
+/StaskNew/frontend/node_modules/
+node_modules/
 
 ### Django ###
 *.log
