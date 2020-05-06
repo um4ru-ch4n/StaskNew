@@ -1,5 +1,5 @@
 import axios from '../../axios/axios-stask'
-import { AUTH_SUCCESS } from './actionTypes'
+import { AUTH_SUCCESS, AUTH_LOGOUT } from './actionTypes'
 
 export function auth(email, password) {
     return async dispatch => {
@@ -8,30 +8,31 @@ export function auth(email, password) {
             password: password,
         }
 
-        let url = "auth/login/"
+        let url = "auth/login"
 
         const options = {
             method: 'POST',
-            config: {headers: { 'Content-Type': 'application/json'},},
-            data: authData,
-            url: url
-        }; 
-
-        /* const response = await axios.post(url,authData, {
             headers: {
                 'Content-Type': 'application/json',
-            }
-        }); */
+            },
+            data: JSON.stringify(authData),
+            url: url
+        };
 
         const response = await axios(options)
 
         const data = response.data;
-        
-        console.log(response)
 
-        /* localStorage.setItem('token', data.idToken);
+        localStorage.setItem('token', data.token);
 
-        dispatch(authSuccess(data.idToken)); */
+        dispatch(authSuccess(data.token));
+    };
+}
+
+export function logout() {
+    localStorage.removeItem('token');
+    return {
+        type: AUTH_LOGOUT
     };
 }
 
@@ -42,11 +43,15 @@ export function authSuccess(token) {
     };
 }
 
+//TODO: Проверка на устаревший токен. Запрос на http://localhost:8000/api/auth/user
 export function autoLogin() {
     return dispatch => {
         const token = localStorage.getItem('token');
-
-        dispatch(authSuccess(token));
-
+        console.log(token)
+        if (!token) {
+            dispatch(logout())
+        } else {
+            dispatch(authSuccess(token));
+        }
     };
 }

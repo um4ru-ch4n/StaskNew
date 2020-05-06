@@ -3,7 +3,8 @@ import classes from './Auth.css'
 import Input from '../../components/UI/Input/Input'
 import Button from '../../components/UI/Button/Button'
 import { connect } from 'react-redux'
-import { auth } from '../../store/actions/auth'
+import { auth, autoLogin } from '../../store/actions/auth'
+import axios from '../../axios/axios-stask'
 
 function vaidateEmail(email) {
     const re = /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/gm;
@@ -37,6 +38,10 @@ class Auth extends React.Component {
                 }
             }
         }
+    }
+
+    componentDidMount() {
+        autoLogin()
     }
 
     loginHandler = () => {
@@ -137,7 +142,8 @@ class Auth extends React.Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        auth: (email, password) => dispatch(auth(email, password))
+        auth: (email, password) => dispatch(auth(email, password)),
+        autoLogin: () => dispatch(autoLogin())
     };
 }
 
