@@ -1,26 +1,38 @@
 import axios from '../../axios/axios-stask'
 import { AUTH_SUCCESS } from './actionTypes'
+import qs from 'qs'
 
-export function auth(email, password, isLogin) {
+export function auth(email, password) {
     return async dispatch => {
         const authData = {
-            email,
-            password,
-            returnSecureToken: true
+            email: email,
+            password: password
         }
 
-        let url = "auth/register/";
+        let url = "auth/login/"
 
-        if (isLogin) {
-            url = "auth/login";
-        }
+        const options = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            data: authData,
+            url: url
+        };
 
-        const response = await axios.post(url, authData);
+        /* const response = await axios.post(url,authData, {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        }); */
+
+        const response = await axios(options)
+
         const data = response.data;
+        
+        console.log(response)
 
-        localStorage.setItem('token', data.idToken);
+        /* localStorage.setItem('token', data.idToken);
 
-        dispatch(authSuccess(data.idToken));
+        dispatch(authSuccess(data.idToken)); */
     };
 }
 

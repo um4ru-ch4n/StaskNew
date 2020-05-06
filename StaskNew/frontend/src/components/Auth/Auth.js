@@ -1,8 +1,9 @@
-import React from 'react';
-import classes from './Auth.css';
-import Input from '../../components/UI/Input/Input';
-import { connect } from 'react-redux';
-import { auth } from '../../store/actions/auth';
+import React from 'react'
+import classes from './Auth.css'
+import Input from '../../components/UI/Input/Input'
+import Button from '../../components/UI/Button/Button'
+import { connect } from 'react-redux'
+import { auth } from '../../store/actions/auth'
 
 function vaidateEmail(email) {
     const re = /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/gm;
@@ -127,11 +128,6 @@ class Auth extends React.Component {
                             type="success"
                             onClick={this.loginHandler}
                         >Войти</Button>
-                        <Button
-                            type="primary"
-                            onClick={this.registerHandler}
-                            disabled={!this.state.isFormValid}
-                        >Зарегистрироваться</Button>
                     </form>
                 </div>
             </div>
