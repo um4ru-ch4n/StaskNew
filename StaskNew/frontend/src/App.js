@@ -1,12 +1,46 @@
 import React from 'react';
-import classes from './App.css';
+import './App.css';
+import Layout from './hoc/Layout/Layout';
+import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import Home from './components/Home/Home';
 
-function App() {
-	return (
-		<div className={classes.App}>
-			<h1>Hi, this is StaskNew!</h1>
-		</div>
-	);
+class App extends React.Component {
+	render() {
+		let routes = (
+			<Switch>
+				<Route path="/" component={Home} />
+				<Redirect to={"/"} />
+			</Switch>
+		);
+		/*
+		if (this.props.isAuthenticated) {
+			routes = (
+				<Switch>
+					<Route path="/" exact component={QuizList} />
+					<Redirect to={"/"} />
+				</Switch>
+			);
+		} */
+
+		return (
+			<Layout>
+				{routes}
+			</Layout>
+		);
+	}
 }
 
-export default App;
+function mapStateToProps(state) {
+	return {
+		
+	};
+}
+
+function mapDispatchToProps(dispatch) {
+	return {
+		
+	};
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
