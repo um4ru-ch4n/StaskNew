@@ -1,22 +1,21 @@
 import axios from '../../axios/axios-stask'
 import { AUTH_SUCCESS } from './actionTypes'
-import qs from 'qs'
 
 export function auth(email, password) {
     return async dispatch => {
         const authData = {
             email: email,
-            password: password
+            password: password,
         }
 
         let url = "auth/login/"
 
         const options = {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            config: {headers: { 'Content-Type': 'application/json'},},
             data: authData,
             url: url
-        };
+        }; 
 
         /* const response = await axios.post(url,authData, {
             headers: {
