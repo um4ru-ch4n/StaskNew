@@ -6,6 +6,8 @@ import { connect } from 'react-redux'
 import Home from './components/Home/Home'
 import Auth from './components/Auth/Auth'
 import { autoLogin } from './store/actions/auth'
+import Registration from './components/Registration/Registration'
+import Logout from './components/Logout/Logout'
 
 class App extends React.Component {
 	componentDidMount() {
@@ -13,26 +15,28 @@ class App extends React.Component {
 	}
 
 	render() {
-		let routes = (
+		let routers = (
 			<Switch>
 				<Route path="/auth" component={Auth} />
+				<Route path="/registration" component={Registration} />
 				<Route exact path="/" component={Home} />
 				<Redirect to={"/"} />
 			</Switch>
 		);
-		/*
+		
 		if (this.props.isAuthenticated) {
-			routes = (
+			routers = (
 				<Switch>
-					<Route path="/" exact component={QuizList} />
+					<Route path="/logout" component={Logout} />
+					<Route exact path="/"  component={Home} />
 					<Redirect to={"/"} />
 				</Switch>
 			);
-		} */
-
+		}
+		
 		return (
 			<Layout>
-				{routes}
+				{routers}
 			</Layout>
 		);
 	}
@@ -40,7 +44,7 @@ class App extends React.Component {
 
 function mapStateToProps(state) {
 	return {
-		
+		isAuthenticated: !!state.auth.token
 	};
 }
 

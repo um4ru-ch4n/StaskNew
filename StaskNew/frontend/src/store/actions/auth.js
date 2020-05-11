@@ -1,5 +1,5 @@
 import axios from '../../axios/axios-stask'
-import { AUTH_SUCCESS, AUTH_LOGOUT } from './actionTypes'
+import { AUTH_SUCCESS, AUTH_LOGOUT, AUTH_ERROR } from './actionTypes'
 
 export function auth(email, password) {
     return async dispatch => {
@@ -19,20 +19,38 @@ export function auth(email, password) {
             url: url
         };
 
-        const response = await axios(options)
-            .catch(error => {
-                
+        await axios(options)
+            .then(response => {
+                localStorage.setItem('token', response.data.token);
+                dispatch(authSuccess(response.data.token));
             })
+            .catch(error => {
+                dispatch(authError());
+            })
+    };
+}
 
-        if (response) {
-            localStorage.setItem('token', response.data.token);
-            dispatch(authSuccess(response.data.token));
-        }
+export function deleteToken() {
+    return async dispatch => {
+        const token = localStorage.getItem('token');
+        const options = {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Token ' + token,
+            },
+            url: "auth/logout"
+        };
+        console.log(token)
+
+        await axios(options)
+            .then(() => {
+                localStorage.removeItem('token');
+                dispatch(logout())
+            })
     };
 }
 
 export function logout() {
-    localStorage.removeItem('token');
     return {
         type: AUTH_LOGOUT
     };
@@ -42,6 +60,13 @@ export function authSuccess(token) {
     return {
         type: AUTH_SUCCESS,
         token
+    };
+}
+
+export function authError() {
+    return {
+        type: AUTH_ERROR,
+        errorMessage: "Неправильный логин или пароль"
     };
 }
 
@@ -55,17 +80,20 @@ export function autoLogin() {
                 headers: {
                     'Authorization': 'Token ' + token,
                 },
-                url: "http://localhost:8000/api/auth/user"
+                url: "auth/user"
             };
 
-            try {
-                await axios(options)
-                dispatch(authSuccess(token));
-            } catch (error) {
-                dispatch(logout())
-            }
+
+            await axios(options)
+                .then(() => {
+                    dispatch(authSuccess(token));
+                })
+                .catch(error => {
+                    dispatch(deleteToken(token))
+                })
+
         } else {
-            dispatch(logout())
+            dispatch(deleteToken(token))
         }
 
     };

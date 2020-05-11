@@ -1,5 +1,6 @@
 import React from 'react'
 import classes from './Header.css'
+import { connect } from 'react-redux'
 
 const Header = props => {
     return (
@@ -11,16 +12,38 @@ const Header = props => {
                     </li>
                 </ul>
                 <ul className="navbar-nav my-2 my-lg-0">
-                    <li className="nav-item">
-                        <a className="nav-link" href="auth">Авторизация <span className="sr-only">(current)</span></a>
-                    </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href="/">Регистрация <span className="sr-only">(current)</span></a>
-                    </li>
+                    {
+                        !props.isAuthenticated
+                            ? <React.Fragment>
+                                <li className="nav-item">
+                                    <a className="nav-link" href="auth">Авторизация <span className="sr-only">(current)</span></a>
+                                </li>
+                                <li className="nav-item">
+                                    <a className="nav-link" href="registration">Регистрация <span className="sr-only">(current)</span></a>
+                                </li>
+                            </React.Fragment>
+                            : <React.Fragment>
+                                <li className="nav-item">
+                                    <a className="nav-link" href="logout">Выйти <span className="sr-only">(current)</span></a>
+                                </li>
+                            </React.Fragment>
+                    }
                 </ul>
             </div>
         </nav>
     )
 }
 
-export default Header
+function mapStateToProps(state) {
+    return {
+        isAuthenticated: !!state.auth.token
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
