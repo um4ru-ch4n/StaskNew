@@ -3,7 +3,7 @@ import classes from './Header.css'
 
 const Header = props => {
     return (
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <nav className={classes.Header + " navbar navbar-expand-lg navbar-light bg-light"}>
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul className="navbar-nav mr-auto">
                     <li className="nav-item">

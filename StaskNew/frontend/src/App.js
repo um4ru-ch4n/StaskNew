@@ -5,8 +5,13 @@ import { Route, Switch, Redirect, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import Home from './components/Home/Home'
 import Auth from './components/Auth/Auth'
+import { autoLogin } from './store/actions/auth'
 
 class App extends React.Component {
+	componentDidMount() {
+		this.props.autoLogin();
+	}
+
 	render() {
 		let routes = (
 			<Switch>
@@ -41,7 +46,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
 	return {
-		
+		autoLogin: () => dispatch(autoLogin())
 	};
 }
 
