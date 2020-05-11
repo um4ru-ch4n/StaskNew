@@ -1,0 +1,26 @@
+import React from 'react';
+import classes from './Layout.css';
+import { connect } from 'react-redux';
+import Header from '../../components/Header/Header';
+
+class Layout extends React.Component {
+    render() {
+        return (
+            <div className={classes.Layout + " container"}>
+                <Header />
+
+                <main>
+                    {this.props.children}
+                </main>
+            </div>
+        );
+    }
+}
+
+function mapStateToProps(state) {
+    return {
+        
+    };
+}
+
+export default connect(mapStateToProps)(Layout);
