@@ -31,26 +31,25 @@ export function auth(email, password) {
 }
 
 export function deleteToken() {
-    return async dispatch => {
-        const token = localStorage.getItem('token');
+    return dispatch => {
+        const token = localStorage.getItem('token')
         const options = {
-            method: 'GET',
+            method: 'POST',
             headers: {
                 'Authorization': 'Token ' + token,
             },
             url: "auth/logout"
         };
-        console.log(token)
 
-        await axios(options)
+        axios(options)
             .then(() => {
-                localStorage.removeItem('token');
                 dispatch(logout())
             })
     };
 }
 
 export function logout() {
+    localStorage.removeItem('token');
     return {
         type: AUTH_LOGOUT
     };
@@ -71,9 +70,8 @@ export function authError() {
 }
 
 export function autoLogin() {
-    return async dispatch => {
+    return dispatch => {
         const token = localStorage.getItem('token');
-
         if (token) {
             const options = {
                 method: 'GET',
@@ -83,17 +81,16 @@ export function autoLogin() {
                 url: "auth/user"
             };
 
-
-            await axios(options)
+            axios(options)
                 .then(() => {
-                    dispatch(authSuccess(token));
+                    dispatch(authSuccess(token))
                 })
                 .catch(error => {
-                    dispatch(deleteToken(token))
+                    dispatch(logout())
                 })
 
         } else {
-            dispatch(deleteToken(token))
+            dispatch(logout())
         }
 
     };

@@ -10,7 +10,7 @@ import Registration from './components/Registration/Registration'
 import Logout from './components/Logout/Logout'
 
 class App extends React.Component {
-	componentDidMount() {
+	UNSAFE_componentWillMount() {
 		this.props.autoLogin();
 	}
 

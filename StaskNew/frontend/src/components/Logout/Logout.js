@@ -4,9 +4,8 @@ import { Redirect } from 'react-router-dom';
 import { deleteToken } from '../../store/actions/auth';
 
 class Logout extends Component {
-    componentDidMount() {
+    UNSAFE_componentWillMount() {
         this.props.deleteToken();
-        console.log("deleteToken")
     }
     
     render() {
@@ -17,7 +16,7 @@ class Logout extends Component {
 function mapDispatchToProps(dispatch) {
     return {
         deleteToken: () => dispatch(deleteToken())
-    };
+    }
 }
 
 export default connect(null, mapDispatchToProps)(Logout);
