@@ -5,11 +5,6 @@ import Button from '../../components/UI/Button/Button'
 import { connect } from 'react-redux'
 import { auth } from '../../store/actions/auth'
 
-function vaidateEmail(email) {
-    const re = /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/gm;
-    return re.test(String(email).toLocaleLowerCase());
-}
-
 class Auth extends React.Component {
     state = {
         isFormValid: false,
@@ -46,18 +41,6 @@ class Auth extends React.Component {
         );
     }
 
-    registerHandler = () => {
-        //TODO: Валидация полей при регистрации + метод регистрации
-        const {email} = this.state.formControls
-        const {password} = this.state.formControls
-        if (this.validateControl(email.value, email.validation) && this.validateControl(password.value, password.validation)) {
-            this.props.auth(
-                email.value,
-                password.value,
-            );
-        } 
-    }
-
     submitHandler = event => {
         event.preventDefault();
     }
@@ -73,27 +56,6 @@ class Auth extends React.Component {
         this.setState({
             formControls,
         })
-    }
-
-    validateControl(value, validation) {
-        if (!validation) {
-            return true;
-        }
-        let isValid = true;
-
-        if (validation.required) {
-            isValid = value.trim() !== '' && isValid;
-        }
-
-        if (validation.email) {
-            isValid = vaidateEmail(value) && isValid;
-        }
-
-        if (validation.minLength) {
-            isValid = value.length >= validation.minLength && isValid;
-        }
-
-        return isValid;
     }
 
     renderInputs() {
@@ -129,6 +91,7 @@ class Auth extends React.Component {
                             onClick={this.loginHandler}
                         >Войти</Button>
                     </form>
+                    {/* TODO: Вывести алерт об ошибке авторизации / об успешной авторизации */}
                 </div>
             </div>
         );

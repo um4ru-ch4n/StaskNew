@@ -1,5 +1,7 @@
 import React from 'react'
 import classes from './Header.css'
+import { connect } from 'react-redux'
+import {NavLink} from 'react-router-dom'
 
 const Header = props => {
     return (
@@ -7,20 +9,42 @@ const Header = props => {
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul className="navbar-nav mr-auto">
                     <li className="nav-item">
-                        <a className="nav-link" href="/">Logo <span className="sr-only">(current)</span></a>
+                        <NavLink to={"/"}>Logo</NavLink>
                     </li>
                 </ul>
                 <ul className="navbar-nav my-2 my-lg-0">
-                    <li className="nav-item">
-                        <a className="nav-link" href="auth">Авторизация <span className="sr-only">(current)</span></a>
-                    </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href="/">Регистрация <span className="sr-only">(current)</span></a>
-                    </li>
+                    {
+                        !props.isAuthenticated
+                            ? <React.Fragment>
+                                <li className="nav-item">
+                                    <NavLink to={"auth"}>Авторизация</NavLink>
+                                </li>
+                                <li className="nav-item">
+                                    <NavLink to={"registration"}>Регистрация</NavLink>
+                                </li>
+                            </React.Fragment>
+                            : <React.Fragment>
+                                <li className="nav-item">
+                                    <NavLink to={"logout"}>Выйти</NavLink>
+                                </li>
+                            </React.Fragment>
+                    }
                 </ul>
             </div>
         </nav>
     )
 }
 
-export default Header
+function mapStateToProps(state) {
+    return {
+        isAuthenticated: !!state.auth.token
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
