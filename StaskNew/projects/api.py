@@ -1,3 +1,4 @@
+from accounts.models import Account, ProjectUsers
 from rest_framework import generics, permissions, viewsets, status
 from rest_framework.response import Response
 from .serializers import ProjectSerializer, ProjectUsersTypesSerializer, TaskSerializer, TodoSerializer
@@ -11,27 +12,28 @@ class CreateProjectAPI(generics.GenericAPIView):
     permission_classes = [
         permissions.IsAuthenticated,
     ]
-    
+
     serializer_class = ProjectSerializer
 
     def post(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data = request.data)
-        serializer.is_valid(raise_exception = True)
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
         project = serializer.save()
 
         projectUser = ProjectUsers(user=request.user, project=project, user_type=ProjectUsersTypes.objects.get(name="Создатель"))
         projectUser.save()
 
         return Response({
-            "project": ProjectSerializer(project, context = self.get_serializer_context()).data,
+            "project": ProjectSerializer(project, context=self.get_serializer_context()).data,
             "projectUser": str(projectUser),
         })
+
 
 class UpdateProjectAPI(generics.GenericAPIView):
     permission_classes = [
         permissions.IsAuthenticated,
     ]
-    
+
     serializer_class = ProjectSerializer
 
     def post(self, request, *args, **kwargs):
@@ -39,9 +41,9 @@ class UpdateProjectAPI(generics.GenericAPIView):
             instance = Project.objects.get(id=request.data["id"])
         except Exception as e:
             return Response(e.args)
-        
-        project = self.get_serializer(instance = instance, data = request.data)
-        project.is_valid(raise_exception = True)
+
+        project = self.get_serializer(instance=instance, data=request.data)
+        project.is_valid(raise_exception=True)
         project.save()
 
         return Response({
@@ -55,13 +57,13 @@ class DeleteProjectAPI(generics.GenericAPIView):
     ]
 
     serializer_class = ProjectSerializer
-    
+
     def delete(self, request, *args, **kwargs):
         try:
             project = Project.objects.get(id=request.data["id"])
         except Exception as e:
             return Response(e.args)
-        
+
         project.delete()
         return Response(data={
             "The project was successfully deleted."
@@ -72,16 +74,16 @@ class CreateProjectUsersTypesAPI(generics.GenericAPIView):
     permission_classes = [
         permissions.IsAuthenticated,
     ]
-    
+
     serializer_class = ProjectUsersTypesSerializer
 
     def post(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data = request.data)
-        serializer.is_valid(raise_exception = True)
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
         projectUserType = serializer.save()
 
         return Response({
-            "projectUserType": ProjectUsersTypesSerializer(projectUserType, context = self.get_serializer_context()).data,
+            "projectUserType": ProjectUsersTypesSerializer(projectUserType, context=self.get_serializer_context()).data,
         })
 
 
@@ -89,7 +91,7 @@ class UpdateProjectUsersTypesAPI(generics.GenericAPIView):
     permission_classes = [
         permissions.IsAuthenticated,
     ]
-    
+
     serializer_class = ProjectUsersTypesSerializer
 
     def post(self, request, *args, **kwargs):
@@ -97,9 +99,10 @@ class UpdateProjectUsersTypesAPI(generics.GenericAPIView):
             instance = ProjectUsersTypes.objects.get(id=request.data["id"])
         except Exception as e:
             return Response(e.args)
-        
-        projectUserType = self.get_serializer(instance = instance, data = request.data)
-        projectUserType.is_valid(raise_exception = True)
+
+        projectUserType = self.get_serializer(
+            instance=instance, data=request.data)
+        projectUserType.is_valid(raise_exception=True)
         projectUserType.save()
 
         return Response({
@@ -113,13 +116,14 @@ class DeleteProjectUsersTypestAPI(generics.GenericAPIView):
     ]
 
     serializer_class = ProjectUsersTypesSerializer
-    
+
     def delete(self, request, *args, **kwargs):
         try:
-            projectUserType = ProjectUsersTypes.objects.get(id=request.data["id"])
+            projectUserType = ProjectUsersTypes.objects.get(
+                id=request.data["id"])
         except Exception as e:
             return Response(e.args)
-        
+
         projectUserType.delete()
         return Response(data={
             "The projectUserType was successfully deleted."
@@ -130,12 +134,12 @@ class CreateTaskAPI(generics.GenericAPIView):
     permission_classes = [
         permissions.IsAuthenticated,
     ]
-    
+
     serializer_class = TaskSerializer
 
     def post(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data = request.data)
-        serializer.is_valid(raise_exception = True)
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
         task = serializer.save()
 
         for user in request.data["users"]:
@@ -144,7 +148,7 @@ class CreateTaskAPI(generics.GenericAPIView):
             us.save()
 
         return Response({
-            "task": TaskSerializer(task, context = self.get_serializer_context()).data,
+            "task": TaskSerializer(task, context=self.get_serializer_context()).data,
         })
 
 
@@ -152,7 +156,7 @@ class UpdateTaskAPI(generics.GenericAPIView):
     permission_classes = [
         permissions.IsAuthenticated,
     ]
-    
+
     serializer_class = TaskSerializer
 
     def post(self, request, *args, **kwargs):
@@ -160,9 +164,9 @@ class UpdateTaskAPI(generics.GenericAPIView):
             instance = Task.objects.get(id=request.data["id"])
         except Exception as e:
             return Response(e.args)
-        
-        task = self.get_serializer(instance = instance, data = request.data)
-        task.is_valid(raise_exception = True)
+
+        task = self.get_serializer(instance=instance, data=request.data)
+        task.is_valid(raise_exception=True)
         task.save()
 
         return Response({
@@ -176,13 +180,13 @@ class DeleteTaskAPI(generics.GenericAPIView):
     ]
 
     serializer_class = TaskSerializer
-    
+
     def delete(self, request, *args, **kwargs):
         try:
             task = Task.objects.get(id=request.data["id"])
         except Exception as e:
             return Response(e.args)
-        
+
         task.delete()
         return Response(data={
             "The task was successfully deleted."
@@ -193,16 +197,16 @@ class CreateTodoAPI(generics.GenericAPIView):
     permission_classes = [
         permissions.IsAuthenticated,
     ]
-    
+
     serializer_class = TodoSerializer
 
     def post(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data = request.data)
-        serializer.is_valid(raise_exception = True)
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
         todo = serializer.save()
 
         return Response({
-            "todo": TodoSerializer(todo, context = self.get_serializer_context()).data,
+            "todo": TodoSerializer(todo, context=self.get_serializer_context()).data,
         })
 
 
@@ -210,7 +214,7 @@ class UpdateTodoAPI(generics.GenericAPIView):
     permission_classes = [
         permissions.IsAuthenticated,
     ]
-    
+
     serializer_class = TodoSerializer
 
     def post(self, request, *args, **kwargs):
@@ -218,9 +222,9 @@ class UpdateTodoAPI(generics.GenericAPIView):
             instance = Todo.objects.get(id=request.data["id"])
         except Exception as e:
             return Response(e.args)
-        
-        todo = self.get_serializer(instance = instance, data = request.data)
-        todo.is_valid(raise_exception = True)
+
+        todo = self.get_serializer(instance=instance, data=request.data)
+        todo.is_valid(raise_exception=True)
         todo.save()
 
         return Response({
@@ -234,13 +238,13 @@ class DeleteTodoAPI(generics.GenericAPIView):
     ]
 
     serializer_class = TodoSerializer
-    
+
     def delete(self, request, *args, **kwargs):
         try:
             todo = Todo.objects.get(id=request.data["id"])
         except Exception as e:
             return Response(e.args)
-        
+
         todo.delete()
         return Response(data={
             "The todo was successfully deleted."
@@ -253,8 +257,23 @@ class ProjectView(viewsets.ReadOnlyModelViewSet):
     ]
 
     serializer_class = ProjectSerializer
-    
+
     queryset = Project.objects.all()
+
+
+class GetProjectsAPI(generics.GenericAPIView):
+    permission_classes = [
+        permissions.IsAuthenticated,
+    ]
+
+    def get(self, request, *args, **kwargs):
+        projectUsers = ProjectUsers.objects.filter(user_id=request.user.id)
+        projects = list(map(lambda prUs: prUs.project_id, projectUsers))
+        queryset = list(map(lambda project: ProjectSerializer(Project.objects.get(id=project), context=self.get_serializer_context()).data, projects))
+        
+        return Response({
+            "projects": queryset,
+        })
 
 
 class ProjectUsersTypesView(viewsets.ReadOnlyModelViewSet):
@@ -275,6 +294,19 @@ class TaskView(viewsets.ReadOnlyModelViewSet):
     serializer_class = TaskSerializer
 
     queryset = Task.objects.all()
+
+
+class GetTasksAPI(generics.GenericAPIView):
+    permission_classes = [
+        permissions.IsAuthenticated,
+    ]
+
+    def get(self, request, *args, **kwargs):
+        tasks = list(map(lambda task: TaskSerializer(task, context=self.get_serializer_context()).data, Task.objects.filter(project_id=request.data["id"])))
+        
+        return Response({
+            "tasks": tasks,
+        })
 
 
 class TodoView(viewsets.ReadOnlyModelViewSet):

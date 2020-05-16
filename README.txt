@@ -63,6 +63,7 @@
 	4) Создаем json объект:
 	{
 	"title": "Test2 Project",									// Название проекта
+	"theme": "Theme of test2 project",							// Тема проекта (необязательно)
 	"description": "the description of the Test2 Project"		// Описание проекта
 	}
 	5) Отправляем запрос
@@ -75,6 +76,7 @@
 	{
 	"id": 3,													// id проекта, который хотим изменить
 	"title": "Test2 Project",									// новое название проекта
+	"theme": "Theme of test2 project",							// новая тема проекта
 	"description": "the description of the Test2 Project"		// Описание проекта
 	}
 	5) Отправляем запрос
@@ -196,3 +198,20 @@
 	Запрос: GET
 	URL: http://localhost:8000/api/projectusers - список всех проект - пользователь - роль
 	URL: http://localhost:8000/api/projectusers/2 - информация о записи с id 2
+
+	Проверка GetProjectsAPI:
+	Запрос: GET
+	Headers:
+		"Authorization": "Token [токен авторизованного пользователя]"
+	URL: http://localhost:8000/api/user_projects - список всех проектов, в которых учавствует пользователь с данным ключем
+	
+	Проверка GetTasksAPI:
+	Запрос: GET
+	Headers: 
+		"Authorization": "Token [токен авторизованного пользователя]",
+		"Content-Type": "application/json"
+	Body:
+		{
+			"id": 1			// id проекта
+		}
+	URL: http://localhost:8000/api/project_tasks - список всех тасков, входящих в данный проект

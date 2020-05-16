@@ -1,90 +1,54 @@
 import React from 'react'
-import classes from './Registration.css'
+import classes from './CreateProject.css'
 import Input from '../../components/UI/Input/Input'
 import Button from '../../components/UI/Button/Button'
 import { connect } from 'react-redux'
+import { createProject } from '../../store/actions/project'
 
-import {registration} from '../../store/actions/auth'
-
-const vaidateEmail = email => {
-    const re = /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/gm;
-    return re.test(String(email).toLocaleLowerCase());
-}
-
-class Registration extends React.Component {
+class CreateProject extends React.Component {
     state = {
         isFormValid: false,
         touched: false,
         formControls: {
-            email: {
+            title: {
                 value: '',
-                type: 'email',
-                label: 'Email',
-                errorMessage: 'Введте корректный email',
+                type: 'text',
+                label: 'Название проекта',
+                errorMessage: 'Слишком длинное или короткое название проекта',
                 valid: false,
                 validation: {
                     required: true,
-                    email: true,
-                    maxLength: 100
+                    maxLength: 100,
+                    minLength: 5
                 }
             },
-            username: {
+            theme: {
                 value: '',
                 type: 'text',
-                label: 'Никнейм',
-                errorMessage: 'Введте корректный никнейм',
+                label: 'Тема проекта',
+                errorMessage: 'Слишком длинная или короткая тема проекта',
                 valid: false,
                 validation: {
-                    required: true,
-                    maxLength: 30,
-                    minLength: 3
+                    required: false,
+                    maxLength: 100,
+                    minLength: 5
                 }
             },
-            first_name: {
+            description: {
                 value: '',
                 type: 'text',
-                label: 'Имя',
-                errorMessage: 'Введте корректное имя',
+                label: 'Описание проекта',
+                errorMessage: 'Введте корректное описание проекта',
                 valid: false,
                 validation: {
-                    maxLength: 50
+                    required: false
                 }
             },
-            last_name: {
-                value: '',
-                type: 'text',
-                label: 'Фамилия',
-                errorMessage: 'Введте корректную фамилию',
-                valid: false,
-                validation: {
-                    maxLength: 50
-                }
-            },
-            patronymic: {
-                value: '',
-                type: 'text',
-                label: 'Отчество',
-                errorMessage: 'Введте корректное отчество',
-                valid: false,
-                validation: {
-                    maxLength: 50
-                }
-            },
-            password: {
-                value: '',
-                type: 'password',
-                label: 'Пароль',
-                errorMessage: 'Введте корректный пароль',
-                valid: false,
-                validation: {
-                    required: true,
-                    minLength: 6
-                }
-            }
+            
         }
     }
 
-    registerHandler = () => {
+    createProjectHandler = () => {
         const formControls = { ...this.state.formControls }
 
         let isFormValid = true
@@ -106,7 +70,7 @@ class Registration extends React.Component {
         })
         
         if (isFormValid) {
-            this.props.registration(fields);
+            this.props.createProject(fields);
         } else {
             // TODO: Алерт об ошибке валидации
         }
@@ -137,19 +101,15 @@ class Registration extends React.Component {
 
         if (validation.required) {
             isValid = value.trim() !== '' && isValid;
-        }
-
-        if (validation.email) {
-            isValid = vaidateEmail(value) && isValid;
-        }
-
-        if (validation.minLength) {
-            isValid = value.length >= validation.minLength && isValid;
+            if (validation.minLength) {
+                isValid = value.length >= validation.minLength && isValid;
+            }
+            
+            if (validation.maxLength) {
+                isValid = value.length <= validation.maxLength && isValid;
+            }
         }
         
-        if (validation.maxLength) {
-            isValid = value.length <= validation.maxLength && isValid;
-        }
         return isValid;
     }
 
@@ -174,21 +134,21 @@ class Registration extends React.Component {
 
     render() {
         return (
-            <div className={classes.Registration}>
+            <div className={classes.CreateProject}>
                 <div>
-                    <h1>Регистрация</h1>
-                    <form onSubmit={this.submitHandler} className={classes.RegistrationForm}>
+                    <h1>Создание проекта</h1>
+                    <form onSubmit={this.submitHandler} className={classes.CreateProjectForm}>
 
                         {this.renderInputs()}
 
                         <Button
                             type="success"
-                            onClick={this.registerHandler}
+                            onClick={this.createProjectHandler}
                         >
-                            Зарегистрироватсья
+                            Создать проект
                         </Button>
                     </form>
-                    {/* TODO: Вывести алерт об ошибке регистрации или о ошибке валидации полей / об успешной регистрации */}
+                    {/* TODO: Вывести алерт об ошибке создания проекта / успешном создании проекта */}
                 </div>
             </div>
         );
@@ -197,8 +157,8 @@ class Registration extends React.Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        registration: (formControls) => dispatch(registration(formControls))
-    };
+        createProject: (fields) => dispatch(createProject(fields))
+    }
 }
 
-export default connect(null, mapDispatchToProps)(Registration);
+export default connect(null, mapDispatchToProps)(CreateProject);

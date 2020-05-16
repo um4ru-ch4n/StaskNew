@@ -14,22 +14,14 @@ class Auth extends React.Component {
                 type: 'email',
                 label: 'Email',
                 errorMessage: 'Введте корректный email',
-                valid: false,
-                validation: {
-                    required: true,
-                    email: true
-                }
+                valid: false
             },
             password: {
                 value: '',
                 type: 'password',
                 label: 'Пароль',
                 errorMessage: 'Введте корректный пароль',
-                valid: false,
-                validation: {
-                    required: true,
-                    minLength: 6
-                }
+                valid: false
             }
         }
     }
@@ -85,11 +77,11 @@ class Auth extends React.Component {
                     <form onSubmit={this.submitHandler} className={classes.AuthForm}>
 
                         {this.renderInputs()}
-
                         <Button
                             type="success"
                             onClick={this.loginHandler}
                         >Войти</Button>
+
                     </form>
                     {/* TODO: Вывести алерт об ошибке авторизации / об успешной авторизации */}
                 </div>

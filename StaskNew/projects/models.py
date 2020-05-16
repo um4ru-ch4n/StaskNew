@@ -5,6 +5,7 @@ from datetime import datetime
 class Project(models.Model):
     id = models.AutoField(primary_key=True)
     title = models.CharField('Название проекта', max_length=100)
+    theme = models.CharField('Тема проекта', max_length=150, default="", blank=True)
     description = models.TextField('Описание проекта', blank=True)
     creation_date = models.DateTimeField('Дата создания проекта', auto_now_add=True)
 

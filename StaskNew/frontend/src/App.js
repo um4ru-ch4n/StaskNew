@@ -8,6 +8,8 @@ import Auth from './components/Auth/Auth'
 import { autoLogin } from './store/actions/auth'
 import Registration from './components/Registration/Registration'
 import Logout from './components/Logout/Logout'
+import CreateProject from './components/CreateProject/CreateProject'
+import UserProjects from './components/UserProjects/UserProjects'
 
 class App extends React.Component {
 	UNSAFE_componentWillMount() {
@@ -28,7 +30,9 @@ class App extends React.Component {
 			routers = (
 				<Switch>
 					<Route path="/logout" component={Logout} />
-					<Route exact path="/"  component={Home} />
+					<Route path="/create_project" component={CreateProject} />
+					<Route path="/user_projects" component={UserProjects} />
+					<Route exact path="/" component={Home} />
 					<Redirect to={"/"} />
 				</Switch>
 			);
@@ -44,7 +48,7 @@ class App extends React.Component {
 
 function mapStateToProps(state) {
 	return {
-		isAuthenticated: !!state.auth.token
+		isAuthenticated: !!state.authReducer.token
 	};
 }
 
