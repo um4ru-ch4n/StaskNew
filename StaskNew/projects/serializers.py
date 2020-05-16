@@ -12,6 +12,7 @@ class ProjectSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         instance.title = validated_data.get('title', instance.title)
+        instance.theme = validated_data.get('theme', instance.theme)
         instance.description = validated_data.get('description', instance.description)
         instance.save()
         return instance

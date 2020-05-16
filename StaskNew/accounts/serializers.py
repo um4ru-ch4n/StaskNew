@@ -39,3 +39,9 @@ class ProjectUsersSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProjectUsers
         fields = '__all__'
+
+
+class GetUserDataSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Account
+        fields = ['id', 'username', 'email', 'first_name', 'last_name', 'patronymic', 'date_joined', 'last_login']

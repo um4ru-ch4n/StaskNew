@@ -25,6 +25,12 @@ const Header = props => {
                             </React.Fragment>
                             : <React.Fragment>
                                 <li className="nav-item">
+                                    <NavLink to={"create_project"}>Создать проект</NavLink>
+                                </li>
+                                <li className="nav-item">
+                                    <NavLink to={"user_projects"}>Список проектов</NavLink>
+                                </li>
+                                <li className="nav-item">
                                     <NavLink to={"logout"}>Выйти</NavLink>
                                 </li>
                             </React.Fragment>
@@ -37,7 +43,7 @@ const Header = props => {
 
 function mapStateToProps(state) {
     return {
-        isAuthenticated: !!state.auth.token
+        isAuthenticated: !!state.authReducer.token
     };
 }
 

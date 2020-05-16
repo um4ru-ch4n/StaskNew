@@ -2,7 +2,7 @@ import React from 'react';
 import classes from './Input.css';
 
 function isInvalid({valid, touched, shouldValidate}) {
-    return !valid && shouldValidate && touched;
+    return !valid && shouldValidate && touched
 }
 
 const Input = props => {
@@ -13,7 +13,7 @@ const Input = props => {
     if (isInvalid(props)) {
         cls.push(classes.invalid)
     }
-
+    
     return (
         <div className={cls.join(' ')}>
             <label htmlFor={htmlFor}>{props.label}</label>

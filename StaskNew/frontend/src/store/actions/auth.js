@@ -1,5 +1,6 @@
 import axios from '../../axios/axios-stask'
-import { AUTH_SUCCESS, AUTH_LOGOUT, AUTH_ERROR } from './actionTypes'
+import { AUTH_SUCCESS, AUTH_LOGOUT, AUTH_ERROR, REGISTRATION_ERROR } from './actionTypes'
+import { clearUserProjects } from './project'
 
 export function auth(email, password) {
     return async dispatch => {
@@ -22,7 +23,7 @@ export function auth(email, password) {
         await axios(options)
             .then(response => {
                 localStorage.setItem('token', response.data.token);
-                dispatch(authSuccess(response.data.token));
+                dispatch(authSuccess(response.data.user, response.data.token));
             })
             .catch(error => {
                 dispatch(authError());
@@ -48,16 +49,24 @@ export function deleteToken() {
     };
 }
 
-export function logout() {
-    localStorage.removeItem('token');
+export function allLogout() {
     return {
         type: AUTH_LOGOUT
     };
 }
 
-export function authSuccess(token) {
+export function logout() {
+    return async dispatch => {
+        localStorage.removeItem('token')
+        dispatch(clearUserProjects())
+        dispatch(allLogout())
+    }
+}
+
+export function authSuccess(user, token) {
     return {
         type: AUTH_SUCCESS,
+        user,
         token
     };
 }
@@ -82,8 +91,8 @@ export function autoLogin() {
             };
 
             axios(options)
-                .then(() => {
-                    dispatch(authSuccess(token))
+                .then((response) => {
+                    dispatch(authSuccess(response.data, token))
                 })
                 .catch(error => {
                     dispatch(logout())
@@ -93,5 +102,31 @@ export function autoLogin() {
             dispatch(logout())
         }
 
+    };
+}
+
+export function registration(formControls) {
+    return async dispatch => {
+        let url = "auth/register"
+
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            data: JSON.stringify(formControls),
+            url: url
+        };
+        await axios(options)
+            .catch(error => {
+                dispatch(registrationError());
+            })
+    };
+}
+
+export function registrationError() {
+    return {
+        type: REGISTRATION_ERROR,
+        errorMessage: "Ошибка регистрации"
     };
 }
