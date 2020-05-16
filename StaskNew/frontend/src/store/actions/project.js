@@ -37,7 +37,7 @@ export function fetchProjects() {
                 dispatch(userProjectsList(response.data.projects))
             })
             .catch(error => {
-                dispatch(projectError());
+                dispatch(projectError("Ошибка получения списка проектов"));
             })
     }
 }

@@ -16,11 +16,7 @@ export default function authReducer(state = initialState, action) {
                 errorMessage: ""
             };
         case AUTH_LOGOUT:
-            return {
-                ...state,
-                token: null,
-                user: {}
-            };
+            return initialState;
         case AUTH_ERROR:
             return {
                 ...state,
