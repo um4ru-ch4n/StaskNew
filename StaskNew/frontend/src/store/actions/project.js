@@ -1,5 +1,5 @@
 import axios from '../../axios/axios-stask'
-import {PROJECT_ERROR, USER_PROJECTS_LIST, CLEAR_USER_PROJECTS } from './actionTypes'
+import {PROJECT_ERROR, USER_PROJECTS_LIST, CLEAR_USER_PROJECTS, CURRENT_PROJECT, CLEAR_CURRENT_PROJECT } from './actionTypes'
 
 export function createProject(formControls) {
     return async dispatch => {
@@ -39,6 +39,19 @@ export function fetchProjects() {
             .catch(error => {
                 dispatch(projectError("Ошибка получения списка проектов"));
             })
+    }
+}
+
+export function setCurrentProject(projectId) {
+    return {
+        type: CURRENT_PROJECT,
+        projectId: projectId
+    }
+}
+
+export function clearCurrentProject() {
+    return {
+        type: CLEAR_CURRENT_PROJECT,
     }
 }
 

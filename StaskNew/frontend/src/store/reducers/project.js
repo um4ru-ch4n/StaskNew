@@ -1,8 +1,9 @@
-import { PROJECT_ERROR, USER_PROJECTS_LIST, CLEAR_USER_PROJECTS } from "../actions/actionTypes";
+import { PROJECT_ERROR, USER_PROJECTS_LIST, CLEAR_USER_PROJECTS, CURRENT_PROJECT, CLEAR_CURRENT_PROJECT } from "../actions/actionTypes";
 
 const initialState = {
     projects: [],
-    errorMessage: ""
+    errorMessage: "",
+    currentProject: {}
 }
 
 export default function projectReducer(state = initialState, action) {
@@ -17,6 +18,22 @@ export default function projectReducer(state = initialState, action) {
             return {
                 ...state,
                 errorMessage: action.errorMessage
+            };
+        case CURRENT_PROJECT:
+            let curProject = {}
+            state.projects.forEach(project => {
+                if (project.id === action.projectId) {
+                    curProject = project
+                }
+            });
+            return {
+                ...state,
+                currentProject: curProject
+            };
+        case CLEAR_CURRENT_PROJECT:
+            return {
+                ...state,
+                currentProject: {}
             };
         case CLEAR_USER_PROJECTS:
             return initialState;

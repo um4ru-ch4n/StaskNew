@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { fetchProjects } from '../../store/actions/project';
+import { fetchProjects, setCurrentProject } from '../../store/actions/project';
 
 class UserProjects extends Component {
+
+    onProjectClickHandler = (projectId) => {
+        this.props.setCurrentProject(projectId)
+    }
 
     renderProjects() {
         return this.props.projects.map((project) => {
@@ -11,7 +15,10 @@ class UserProjects extends Component {
                 <li
                     key={project.id}
                 >
-                    <NavLink to={'/project/' + project.id}>
+                    <NavLink
+                        to={'user_projects/project/' + project.id}
+                        onClick={() => this.onProjectClickHandler(project.id)}
+                    >
                         {project.title}
                     </NavLink>
                 </li>
@@ -54,7 +61,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        fetchProjects: () => dispatch(fetchProjects())
+        fetchProjects: () => dispatch(fetchProjects()),
+        setCurrentProject: (projectId) => dispatch(setCurrentProject(projectId))
     };
 }
 

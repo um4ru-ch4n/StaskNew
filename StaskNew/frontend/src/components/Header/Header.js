@@ -17,21 +17,21 @@ const Header = props => {
                         !props.isAuthenticated
                             ? <React.Fragment>
                                 <li className="nav-item">
-                                    <NavLink to={"auth"}>Авторизация</NavLink>
+                                    <NavLink to={"/auth"}>Авторизация</NavLink>
                                 </li>
                                 <li className="nav-item">
-                                    <NavLink to={"registration"}>Регистрация</NavLink>
+                                    <NavLink to={"/registration"}>Регистрация</NavLink>
                                 </li>
                             </React.Fragment>
                             : <React.Fragment>
                                 <li className="nav-item">
-                                    <NavLink to={"create_project"}>Создать проект</NavLink>
+                                    <NavLink to={"/create_project"}>Создать проект</NavLink>
                                 </li>
                                 <li className="nav-item">
-                                    <NavLink to={"user_projects"}>Список проектов</NavLink>
+                                    <NavLink to={"/user_projects"}>Список проектов</NavLink>
                                 </li>
                                 <li className="nav-item">
-                                    <NavLink to={"logout"}>Выйти</NavLink>
+                                    <NavLink to={"/logout"}>Выйти</NavLink>
                                 </li>
                             </React.Fragment>
                     }
