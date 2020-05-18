@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { fetchProjects, setCurrentProject } from '../../store/actions/project';
+import classes from './UserProjects.css'
 
 class UserProjects extends Component {
 
@@ -32,8 +33,8 @@ class UserProjects extends Component {
 
     render() {
         return (
-            <div>
-                <div>
+            <div className={classes.card}>
+                <div className={classes.cardBody}>
                     <h1>Список проектов</h1>
                     {
                         /* this.props.loading && this.props.projects.length !== 0

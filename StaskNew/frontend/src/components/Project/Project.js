@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { clearCurrentProject } from '../../store/actions/project';
+import classes from './Project.css'
 
 class Project extends Component {
     componentWillUnmount() {
@@ -10,10 +11,10 @@ class Project extends Component {
     render() {
         const {title, theme, description} = this.props.currentProject;
         return (
-            <div>
-                <h1>Проект {title}</h1>
-                <h1>Тема {theme}</h1>
-                <h1>Описание {description}</h1>
+            <div className={classes.card}>
+                <h1>Проект: {title}</h1>
+                <h1>Тема: {theme}</h1>
+                <h1>Описание: {description}</h1>
             </div>            
         )
     }
