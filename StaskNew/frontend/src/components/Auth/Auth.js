@@ -9,6 +9,13 @@ class Auth extends React.Component {
     state = {
         isFormValid: false,
         formControls: {
+            nickname: {
+                value: '',
+                type: 'text',
+                label: 'Никнейм',
+                errorMessage: 'Введте корректный никнейм',
+                valid: false
+            },
             email: {
                 value: '',
                 type: 'email',
@@ -72,7 +79,6 @@ class Auth extends React.Component {
         return (
             <div className={classes.Auth}>
                 <div>
-                    <h1>Авторизация</h1>
 
                     <form onSubmit={this.submitHandler} className={classes.AuthForm}>
 
