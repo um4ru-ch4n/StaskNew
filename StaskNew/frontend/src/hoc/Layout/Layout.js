@@ -6,7 +6,7 @@ import Header from '../../components/Header/Header';
 class Layout extends React.Component {
     render() {
         return (
-            <div className={classes.Layout + " container"}>
+            <div className={classes.Layout}>
                 <Header />
 
                 <main>
