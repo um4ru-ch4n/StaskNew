@@ -1,4 +1,4 @@
-.CreateProject {
+.CreateTask {
     display: flex;
     justify-content: center;
     padding-top: 100px;
@@ -6,25 +6,20 @@
     width: 100%;
 }
 
-.CreateProject > div {
+.CreateTask > div {
     width: 100%;
     max-width: 700px;
     padding: 0 20px;
 }
 
-.CreateProject h1 {
-    padding-bottom: 10px;
+.CreateTask h1 {
     color: rgb(0, 0, 0);
     text-align: center;
 }
 
-.CreateProjectForm {
-    background-color: #eff;
-    box-shadow: 0 0 5px rgba(0,0,0,0.5);
+.CreateTaskForm {
+    background: #eee;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
     padding: 15px;
     border-radius: 5px;
-}
-
-.CreateProject Button {
-    width: 100%;
 }

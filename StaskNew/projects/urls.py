@@ -23,6 +23,7 @@ urlpatterns = [
     path('api/create_projectusertype', api.CreateProjectUsersTypesAPI.as_view()),
     path('api/update_projectusertype', api.UpdateProjectUsersTypesAPI.as_view()),
     path('api/delete_projectusertype', api.DeleteProjectUsersTypestAPI.as_view()),
-    path('api/user_projects', api.GetProjectsAPI.as_view()),
+    path('api/user_projects', api.GetUserProjectsAPI.as_view()),
     path('api/project_tasks', api.GetTasksAPI.as_view()),
+    path('api/project_users', api.GetProjectUsersAPI.as_view()),
 ]

@@ -22,6 +22,8 @@ const Input = props => {
                 id={htmlFor}
                 value={props.value}
                 onChange={props.onChange}
+                min={props.min}
+                checked={props.checked}
             />
 
             {

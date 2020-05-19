@@ -1,5 +1,5 @@
 import axios from '../../axios/axios-stask'
-import {PROJECT_ERROR, USER_PROJECTS_LIST, CLEAR_USER_PROJECTS } from './actionTypes'
+import {PROJECT_ERROR, USER_PROJECTS_LIST, CLEAR_USER_PROJECTS, CURRENT_PROJECT, CLEAR_CURRENT_PROJECT, PROJECTS_USERS_LIST } from './actionTypes'
 
 export function createProject(formControls) {
     return async dispatch => {
@@ -14,6 +14,7 @@ export function createProject(formControls) {
             data: JSON.stringify(formControls),
             url: url
         };
+        console.log(options.data)
         await axios(options)
             .catch(error => {
                 dispatch(projectError("Ошибка создания проекта"));
@@ -42,10 +43,57 @@ export function fetchProjects() {
     }
 }
 
+export function fetchProjectUsers(projectId) {
+    return async dispatch => {
+        const prId = {
+            id: projectId,
+        }
+        let url = "project_users"
+        const token = localStorage.getItem("token")
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Token ' + token,
+            },
+            data: JSON.stringify(prId),
+            url: url
+        };
+        
+        await axios(options)
+            .then(response => {
+                dispatch(userProjectUsersList(response.data.users))
+            })
+            .catch(error => {
+                dispatch(projectError("Ошибка получения списка пользователей"));
+            })
+    }
+}
+
+export function setCurrentProject(projectId) {
+    return {
+        type: CURRENT_PROJECT,
+        projectId: projectId
+    }
+}
+
+export function clearCurrentProject() {
+    return {
+        type: CLEAR_CURRENT_PROJECT,
+    }
+}
+
 export function userProjectsList(projects) {
     return {
         type: USER_PROJECTS_LIST,
         projects: projects
+    }
+}
+
+export function userProjectUsersList(projectUsers) {
+    return {
+        type: PROJECTS_USERS_LIST,
+        projectUsers: projectUsers
     }
 }
 

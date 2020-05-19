@@ -10,6 +10,7 @@ import Registration from './components/Registration/Registration'
 import Logout from './components/Logout/Logout'
 import CreateProject from './components/CreateProject/CreateProject'
 import UserProjects from './components/UserProjects/UserProjects'
+import Project from './components/Project/Project'
 
 class App extends React.Component {
 	UNSAFE_componentWillMount() {
@@ -29,10 +30,11 @@ class App extends React.Component {
 		if (this.props.isAuthenticated) {
 			routers = (
 				<Switch>
-					<Route path="/logout" component={Logout} />
-					<Route path="/create_project" component={CreateProject} />
-					<Route path="/user_projects" component={UserProjects} />
-					<Route exact path="/" component={Home} />
+					<Route path="/create_project/" component={CreateProject} />
+					<Route path="/user_projects/project/:id/" component={Project}/>
+					<Route path="/user_projects/" component={UserProjects} />
+					<Route path="/logout/" component={Logout} />
+					<Route path="/" exact component={Home} />
 					<Redirect to={"/"} />
 				</Switch>
 			);
