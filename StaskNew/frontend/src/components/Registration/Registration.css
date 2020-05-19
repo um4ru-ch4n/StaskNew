@@ -13,12 +13,17 @@
 }
 
 .Registration h1 {
-    color: rgb(0, 0, 0);
+    padding-bottom: 10px;
     text-align: center;
 }
 
 .RegistrationForm {
-    background: #fff;
+    background-color: #eff;
+    box-shadow: 0 0 5px rgba(0,0,0,0.5);
     padding: 15px;
     border-radius: 5px;
+}
+
+.Registration Button {
+    width: 100%;
 }

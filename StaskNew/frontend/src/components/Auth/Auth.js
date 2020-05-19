@@ -72,7 +72,7 @@ class Auth extends React.Component {
         return (
             <div className={classes.Auth}>
                 <div>
-
+                <h1>Авторизация</h1>
                     <form onSubmit={this.submitHandler} className={classes.AuthForm}>
 
                         {this.renderInputs()}

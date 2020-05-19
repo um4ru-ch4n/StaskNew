@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { clearCurrentProject, fetchProjectUsers } from '../../store/actions/project';
 import CreateTask from '../CreateTask/CreateTask';
+import classes from './Project.css'
 
 class Project extends Component {
     componentWillUnmount() {

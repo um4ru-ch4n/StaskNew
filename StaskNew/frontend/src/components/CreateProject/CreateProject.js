@@ -71,6 +71,7 @@ class CreateProject extends React.Component {
         
         if (isFormValid) {
             this.props.createProject(fields);
+
         } else {
             // TODO: Алерт об ошибке валидации
         }
@@ -78,6 +79,7 @@ class CreateProject extends React.Component {
 
     submitHandler = event => {
         event.preventDefault();
+        this.props.history.push('/user_projects');
     }
 
     onChangeHandler = (event, controlName) => {
