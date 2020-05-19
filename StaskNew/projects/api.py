@@ -7,6 +7,7 @@ from .models import Project, ProjectUsersTypes, Task, Todo
 import sys
 sys.path.append('../')
 from accounts.models import Account, ProjectUsers
+from accounts.serializers import GetUserDataSerializer
 
 class CreateProjectAPI(generics.GenericAPIView):
     permission_classes = [
@@ -142,10 +143,11 @@ class CreateTaskAPI(generics.GenericAPIView):
         serializer.is_valid(raise_exception=True)
         task = serializer.save()
 
-        for user in request.data["users"]:
-            us = Account.objects.get(id=user)
-            us.tasks.add(task)
-            us.save()
+        if request.data["users"]:
+            for user in request.data["users"]:
+                us = Account.objects.get(id=user)
+                us.tasks.add(task)
+                us.save()
 
         return Response({
             "task": TaskSerializer(task, context=self.get_serializer_context()).data,
@@ -261,7 +263,7 @@ class ProjectView(viewsets.ReadOnlyModelViewSet):
     queryset = Project.objects.all()
 
 
-class GetProjectsAPI(generics.GenericAPIView):
+class GetUserProjectsAPI(generics.GenericAPIView):
     permission_classes = [
         permissions.IsAuthenticated,
     ]
@@ -273,6 +275,20 @@ class GetProjectsAPI(generics.GenericAPIView):
         
         return Response({
             "projects": queryset,
+        })
+
+class GetProjectUsersAPI(generics.GenericAPIView):
+    permission_classes = [
+        permissions.IsAuthenticated,
+    ]
+
+    def post(self, request, *args, **kwargs):
+        projectUsers = ProjectUsers.objects.filter(project_id=request.data["id"])
+        users = list(map(lambda prUs: prUs.user_id, projectUsers))
+        queryset = list(map(lambda user: GetUserDataSerializer(Account.objects.get(id=user), context=self.get_serializer_context()).data, users))
+        
+        return Response({
+            "users": queryset,
         })
 
 

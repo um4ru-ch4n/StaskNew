@@ -1,20 +1,26 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { clearCurrentProject } from '../../store/actions/project';
+import { clearCurrentProject, fetchProjectUsers } from '../../store/actions/project';
+import CreateTask from '../CreateTask/CreateTask';
 
 class Project extends Component {
     componentWillUnmount() {
         this.props.clearCurrentProject()
     }
 
+    UNSAFE_componentWillMount() {
+        this.props.fetchProjectUsers(this.props.currentProject.id)
+    }
+
     render() {
-        const {title, theme, description} = this.props.currentProject;
+        const { title, theme, description } = this.props.currentProject;
         return (
             <div>
                 <h1>Проект {title}</h1>
                 <h1>Тема {theme}</h1>
                 <h1>Описание {description}</h1>
-            </div>            
+                <CreateTask projectUsers={this.props.projectUsers} />
+            </div>
         )
     }
 }
@@ -22,12 +28,14 @@ class Project extends Component {
 function mapStateToProps(state) {
     return {
         currentProject: state.projectReducer.currentProject,
+        projectUsers: state.projectReducer.projectUsers
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        clearCurrentProject: () => dispatch(clearCurrentProject())
+        clearCurrentProject: () => dispatch(clearCurrentProject()),
+        fetchProjectUsers: (projectId) => dispatch(fetchProjectUsers(projectId)),
     };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Project);

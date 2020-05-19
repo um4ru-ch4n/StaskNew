@@ -9,13 +9,6 @@ class Auth extends React.Component {
     state = {
         isFormValid: false,
         formControls: {
-            nickname: {
-                value: '',
-                type: 'text',
-                label: 'Никнейм',
-                errorMessage: 'Введте корректный никнейм',
-                valid: false
-            },
             email: {
                 value: '',
                 type: 'email',
