@@ -317,7 +317,7 @@ class GetTasksAPI(generics.GenericAPIView):
         permissions.IsAuthenticated,
     ]
 
-    def get(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         tasks = list(map(lambda task: TaskSerializer(task, context=self.get_serializer_context()).data, Task.objects.filter(project_id=request.data["id"])))
         
         return Response({
