@@ -8,3 +8,4 @@ node_modules/
 __pycache__/
 local_settings.py
 media
+StaskNew/StaskNew/settings.py
