@@ -200,13 +200,13 @@
 	URL: http://localhost:8000/api/projectusers/2 - информация о записи с id 2
 
 	Проверка GetProjectsAPI:
-	Запрос: GET
+	Запрос: POST
 	Headers:
 		"Authorization": "Token [токен авторизованного пользователя]"
 	URL: http://localhost:8000/api/user_projects - список всех проектов, в которых учавствует пользователь с данным ключем
 	
 	Проверка GetTasksAPI:
-	Запрос: GET
+	Запрос: POST
 	Headers: 
 		"Authorization": "Token [токен авторизованного пользователя]",
 		"Content-Type": "application/json"
@@ -215,3 +215,14 @@
 			"id": 1			// id проекта
 		}
 	URL: http://localhost:8000/api/project_tasks - список всех тасков, входящих в данный проект
+	
+	Проверка GetTodosAPI:
+	Запрос: POST
+	Headers: 
+		"Authorization": "Token [токен авторизованного пользователя]",
+		"Content-Type": "application/json"
+	Body:
+		{
+			"id": 33			// id таска
+		}
+	URL: http://localhost:8000/api/task_todos - список всех тасков, входящих в данный проект

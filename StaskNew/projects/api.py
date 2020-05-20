@@ -333,3 +333,16 @@ class TodoView(viewsets.ReadOnlyModelViewSet):
     serializer_class = TodoSerializer
 
     queryset = Todo.objects.all()
+
+
+class GetTodosAPI(generics.GenericAPIView):
+    permission_classes = [
+        permissions.IsAuthenticated,
+    ]
+
+    def post(self, request, *args, **kwargs):
+        todos = list(map(lambda todo: TodoSerializer(todo, context=self.get_serializer_context()).data, Todo.objects.filter(task_id=request.data["id"])))
+        
+        return Response({
+            "todos": todos,
+        })
