@@ -31,17 +31,23 @@ export function createTask(formControls) {
     }
 }
 
-export function fetchTasks() {
+export function fetchTasks(projectId) {
     return async dispatch => {
+        const prId = {
+            id: projectId,
+        }
         let url = "project_tasks"
         const token = localStorage.getItem("token")
         const options = {
-            method: 'GET',
+            method: 'POST',
             headers: {
+                'Content-Type': 'application/json',
                 'Authorization': 'Token ' + token,
             },
+            data: JSON.stringify(prId),
             url: url
-        };
+        }
+
         await axios(options)
             .then(response => {
                 dispatch(projectTasksList(response.data.tasks))
