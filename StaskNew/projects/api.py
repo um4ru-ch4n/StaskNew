@@ -1,3 +1,4 @@
+from accounts.serializers import GetUserDataSerializer
 from accounts.models import Account, ProjectUsers
 from rest_framework import generics, permissions, viewsets, status
 from rest_framework.response import Response
@@ -6,8 +7,7 @@ from .models import Project, ProjectUsersTypes, Task, Todo
 
 import sys
 sys.path.append('../')
-from accounts.models import Account, ProjectUsers
-from accounts.serializers import GetUserDataSerializer
+
 
 class CreateProjectAPI(generics.GenericAPIView):
     permission_classes = [
@@ -21,12 +21,19 @@ class CreateProjectAPI(generics.GenericAPIView):
         serializer.is_valid(raise_exception=True)
         project = serializer.save()
 
-        projectUser = ProjectUsers(user=request.user, project=project, user_type=ProjectUsersTypes.objects.get(name="Создатель"))
-        projectUser.save()
+        projectUsers = list()
+        if project:
+            projectUsers.append(ProjectUsers(user=request.user, project=project, user_type=ProjectUsersTypes.objects.get(name="Создатель")))
+            for user in request.data["users"]:
+                projectUsers.append(ProjectUsers(user=Account.objects.get(
+                    email=user["email"]), project=project, user_type=ProjectUsersTypes.objects.create(name=user["type"])))
+
+            for projectUser in projectUsers:
+                projectUser.save(projectUser)
 
         return Response({
             "project": ProjectSerializer(project, context=self.get_serializer_context()).data,
-            "projectUser": str(projectUser),
+            "projectUsers": str(projectUsers),
         })
 
 
@@ -271,11 +278,13 @@ class GetUserProjectsAPI(generics.GenericAPIView):
     def get(self, request, *args, **kwargs):
         projectUsers = ProjectUsers.objects.filter(user_id=request.user.id)
         projects = list(map(lambda prUs: prUs.project_id, projectUsers))
-        queryset = list(map(lambda project: ProjectSerializer(Project.objects.get(id=project), context=self.get_serializer_context()).data, projects))
-        
+        queryset = list(map(lambda project: ProjectSerializer(Project.objects.get(
+            id=project), context=self.get_serializer_context()).data, projects))
+
         return Response({
             "projects": queryset,
         })
+
 
 class GetProjectUsersAPI(generics.GenericAPIView):
     permission_classes = [
@@ -283,10 +292,12 @@ class GetProjectUsersAPI(generics.GenericAPIView):
     ]
 
     def post(self, request, *args, **kwargs):
-        projectUsers = ProjectUsers.objects.filter(project_id=request.data["id"])
+        projectUsers = ProjectUsers.objects.filter(
+            project_id=request.data["id"])
         users = list(map(lambda prUs: prUs.user_id, projectUsers))
-        queryset = list(map(lambda user: GetUserDataSerializer(Account.objects.get(id=user), context=self.get_serializer_context()).data, users))
-        
+        queryset = list(map(lambda user: GetUserDataSerializer(Account.objects.get(
+            id=user), context=self.get_serializer_context()).data, users))
+
         return Response({
             "users": queryset,
         })
@@ -318,8 +329,9 @@ class GetTasksAPI(generics.GenericAPIView):
     ]
 
     def post(self, request, *args, **kwargs):
-        tasks = list(map(lambda task: TaskSerializer(task, context=self.get_serializer_context()).data, Task.objects.filter(project_id=request.data["id"])))
-        
+        tasks = list(map(lambda task: TaskSerializer(task, context=self.get_serializer_context(
+        )).data, Task.objects.filter(project_id=request.data["id"])))
+
         return Response({
             "tasks": tasks,
         })
@@ -341,8 +353,9 @@ class GetTodosAPI(generics.GenericAPIView):
     ]
 
     def post(self, request, *args, **kwargs):
-        todos = list(map(lambda todo: TodoSerializer(todo, context=self.get_serializer_context()).data, Todo.objects.filter(task_id=request.data["id"])))
-        
+        todos = list(map(lambda todo: TodoSerializer(todo, context=self.get_serializer_context(
+        )).data, Todo.objects.filter(task_id=request.data["id"])))
+
         return Response({
             "todos": todos,
         })

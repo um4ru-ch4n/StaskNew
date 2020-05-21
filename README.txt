@@ -62,9 +62,13 @@
 	3) Во вкладке Body ставим флажок raw.
 	4) Создаем json объект:
 	{
-	"title": "Test2 Project",									// Название проекта
-	"theme": "Theme of test2 project",							// Тема проекта (необязательно)
-	"description": "the description of the Test2 Project"		// Описание проекта
+		"title": "Test3 Project",									// Название проекта
+		"theme": "theme of test3 project",							// Тема проекта
+		"description": "the description of the Test3 Project",		// Описание проекта
+		"users": [													// Массив пользователей с их типами
+			{"email": "zxcv@zxcv.ru", "type": "Менеджер"},			
+			{"email": "17515560@mail.ru", "type": "Просто чувак"}
+		]
 	}
 	5) Отправляем запрос
 
