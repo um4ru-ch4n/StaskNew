@@ -6,9 +6,9 @@ import classes from './Project.css'
 import UserTasks from '../UserTasks/UserTasks'
 
 class Project extends Component {
-    componentWillUnmount() {
+    /* componentWillUnmount() {
         this.props.clearCurrentProject()
-    }
+    } */
 
     UNSAFE_componentWillMount() {
         this.props.fetchProjectUsers(this.props.currentProject.id)
@@ -19,17 +19,17 @@ class Project extends Component {
         const { title, theme, description } = this.props.currentProject;
         return (
             <div className={classes.Project}>
-                <div class="jumbotron">
-                <h2 class="display-4">{title}</h2>
-                <p class="lead">{theme}</p>
-                <hr class="my-4"/>
-                <p>{description}</p>
-                <div style={{display: "flex"}}>
-                <CreateTask projectUsers={this.props.projectUsers} />
-                <UserTasks />
+                <div className="jumbotron">
+                    <h2 className="display-4">{title}</h2>
+                    <p className="lead">{theme}</p>
+                    <hr className="my-4" />
+                    <p>{description}</p>
+                    <div style={{ display: "flex" }}>
+                        <CreateTask projectUsers={this.props.projectUsers} />
+                        <UserTasks />
+                    </div>
                 </div>
-                </div>
-            </div>          
+            </div>
         )
     }
 }
