@@ -12,6 +12,10 @@ class Project extends Component {
 
     UNSAFE_componentWillMount() {
         this.props.fetchProjectUsers(this.props.currentProject.id)
+        const pExist = this.props.location.pathname.match(/\d+/g);
+        if (pExist[0] !== this.props.currentProject.id + ''){
+            this.props.history.push('/user_projects');
+        }
     }
 
 
