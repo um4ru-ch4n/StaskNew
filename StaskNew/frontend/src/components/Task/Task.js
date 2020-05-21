@@ -11,7 +11,7 @@ class Task extends Component {
     UNSAFE_componentWillMount() {
         const ptExist = this.props.location.pathname.match(/\d+/g);
         if (ptExist[0] !== this.props.currentTask.project + '' ||  ptExist[1] !== this.props.currentTask.id + ''){
-            this.props.history.push(`/user_projects/${this.props.currentTask.project}/`);
+            this.props.history.push(`/user_projects/${this.props.currentTask.project}`);
         }
     }
 
