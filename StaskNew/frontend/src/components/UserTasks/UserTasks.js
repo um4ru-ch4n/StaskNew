@@ -41,7 +41,6 @@ class UserTasks extends Component {
                             {this.renderTasks()}
                         </ul>
                     }
-
                 </div>
             </div>
         )

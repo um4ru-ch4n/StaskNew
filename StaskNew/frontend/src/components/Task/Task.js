@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { clearCurrentTask } from '../../store/actions/task';
 import classes from './Task.css'
+import ToDoList from '../ToDoList/ToDoList';
 
 class Task extends Component {
     /* componentWillUnmount() {
@@ -23,6 +24,7 @@ class Task extends Component {
                     <h2 className="display-4">{title}</h2>
                     <hr className="my-4" />
                     <p>{description}</p>
+                    <ToDoList />
                 </div>
             </div>
         )

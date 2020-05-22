@@ -4,7 +4,8 @@ import Input from '../../components/UI/Input/Input'
 import Button from '../../components/UI/Button/Button'
 import { connect } from 'react-redux'
 import { createProject } from '../../store/actions/project'
-
+import Select from 'react-select';
+import makeAnimated from 'react-select/animated';
 class CreateProject extends React.Component {
     state = {
         isFormValid: false,
@@ -44,8 +45,16 @@ class CreateProject extends React.Component {
                     required: false
                 }
             },
+            email: {
+                value: '',
+                type: 'email',
+                label: 'Email участника проекта',
+                errorMessage: 'Введте корректный email',
+                valid: false
+            }
             
-        }
+        },
+        projectUsers: []
     }
 
     createProjectHandler = () => {
@@ -135,6 +144,7 @@ class CreateProject extends React.Component {
     }
 
     render() {
+        const animatedComponents = makeAnimated();
         return (
             <div className={classes.CreateProject}>
                 <div>
@@ -142,7 +152,14 @@ class CreateProject extends React.Component {
                     <form onSubmit={this.submitHandler} className={classes.CreateProjectForm}>
 
                         {this.renderInputs()}
-
+                        <label style={{fontWeight: 'bold'}}>Тип участника</label>
+                        <Select
+                            closeMenuOnSelect={false}
+                            components={animatedComponents}
+                            defaultValue={[]}
+                            sMulti
+                        />
+                        
                         <Button
                             type="success"
                             onClick={this.createProjectHandler}

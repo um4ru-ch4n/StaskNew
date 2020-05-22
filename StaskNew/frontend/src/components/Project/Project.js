@@ -29,8 +29,8 @@ class Project extends Component {
                     <hr className="my-4" />
                     <p>{description}</p>
                     <div style={{ display: "flex" }}>
-                        <CreateTask projectUsers={this.props.projectUsers} />
                         <UserTasks />
+                        <CreateTask projectUsers={this.props.projectUsers} />
                     </div>
                 </div>
             </div>

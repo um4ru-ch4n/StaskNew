@@ -1,9 +1,8 @@
 .CreateTask {
     display: flex;
     justify-content: center;
-    padding-top: 100px;
+    padding-top: 2%;
     flex-grow: 1;
-    width: 100%;
 }
 
 .CreateTask > div {
