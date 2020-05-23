@@ -67,10 +67,10 @@ export function clearCurrentTodo() {
     }
 }
 
-export function taskTodosList(tasks) {
+export function taskTodosList(todos) {
     return {
         type: TASK_TODOS_LIST,
-        tasks: tasks
+        todos: todos
     }
 }
 

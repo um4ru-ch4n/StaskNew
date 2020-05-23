@@ -6,7 +6,7 @@ import { fetchTodos, setCurrentTodo } from '../../store/actions/todo';
 class ToDoList extends Component {
 
     UNSAFE_componentWillMount() {
-        this.props.fetchTodos(this.props.currentProject.id);
+        this.props.fetchTodos(this.props.currentTask.id);
     }
 
     renderToDos() {
@@ -19,7 +19,7 @@ class ToDoList extends Component {
                         to={todo.task + "/" + todo.id}
                         onClick={() => this.props.setCurrentTodo(todo.id)}
                     >
-                        {todo.title}
+                        {todo.text}
                     </NavLink>
                 </li>
             );
