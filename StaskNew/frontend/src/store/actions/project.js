@@ -14,7 +14,6 @@ export function createProject(formControls) {
             data: JSON.stringify(formControls),
             url: url
         };
-        console.log(options.data)
         await axios(options)
             .catch(error => {
                 dispatch(projectError("Ошибка создания проекта"));

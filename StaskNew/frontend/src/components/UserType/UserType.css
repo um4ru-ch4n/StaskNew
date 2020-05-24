@@ -1,0 +1,16 @@
+.UserType {
+    display: flex;
+    font-weight: bold;
+}
+
+.UserType Input {
+    width: 400px;
+}
+.SelectGroup  {
+    margin-left: 10px;
+}
+.UserType Button {
+    height: 38px;
+    margin-top:23px;
+    margin-left: 10px;
+}

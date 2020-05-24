@@ -4,8 +4,7 @@ import Input from '../../components/UI/Input/Input'
 import Button from '../../components/UI/Button/Button'
 import { connect } from 'react-redux'
 import { createProject } from '../../store/actions/project'
-import Select from 'react-select';
-import makeAnimated from 'react-select/animated';
+import UserType from '../UserType/UserType'
 class CreateProject extends React.Component {
     state = {
         isFormValid: false,
@@ -44,17 +43,9 @@ class CreateProject extends React.Component {
                 validation: {
                     required: false
                 }
-            },
-            email: {
-                value: '',
-                type: 'email',
-                label: 'Email участника проекта',
-                errorMessage: 'Введте корректный email',
-                valid: false
-            }
-            
+            }        
         },
-        projectUsers: []
+        numUsers: 1
     }
 
     createProjectHandler = () => {
@@ -143,23 +134,27 @@ class CreateProject extends React.Component {
         })
     }
 
+    addUser = event =>{
+        event.preventDefault();
+        const {numUsers} = this.state;
+        this.setState({numUsers: numUsers + 1 });
+    }
+
     render() {
-        const animatedComponents = makeAnimated();
+        const {numUsers} = this.state;
+        const users = []
+        for (var i = 0; i < numUsers; i+=1) {
+            users.push(<UserType/>)
+        }
         return (
             <div className={classes.CreateProject}>
                 <div>
                     <h1>Создание проекта</h1>
                     <form onSubmit={this.submitHandler} className={classes.CreateProjectForm}>
 
-                        {this.renderInputs()}
-                        <label style={{fontWeight: 'bold'}}>Тип участника</label>
-                        <Select
-                            closeMenuOnSelect={false}
-                            components={animatedComponents}
-                            defaultValue={[]}
-                            sMulti
-                        />
-                        
+                        {this.renderInputs()}                        
+                        {users}
+                        <Button onClick={this.addUser}>+</Button>           
                         <Button
                             type="success"
                             onClick={this.createProjectHandler}

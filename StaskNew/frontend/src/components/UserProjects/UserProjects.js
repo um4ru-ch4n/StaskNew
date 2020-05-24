@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { fetchProjects, setCurrentProject } from '../../store/actions/project';
-import classes from './UserProjects.css'
-
+import classes from './UserProjects.css' 
 class UserProjects extends Component {
 
     UNSAFE_componentWillMount() {
