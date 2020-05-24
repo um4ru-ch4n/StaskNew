@@ -48,6 +48,10 @@ class CreateProject extends React.Component {
         numUsers: 1
     }
 
+    UNSAFE_componentWillMount() {
+        this.props.fetchProjectUserTypes()
+    }
+
     createProjectHandler = () => {
         const formControls = { ...this.state.formControls }
 
@@ -140,11 +144,25 @@ class CreateProject extends React.Component {
         this.setState({numUsers: numUsers + 1 });
     }
 
+    remUser = event =>{
+        event.preventDefault();
+        const {numUsers} = this.state;
+        if (numUsers > 0) {
+            this.setState({numUsers: numUsers - 1 });
+        }
+    }
+
     render() {
+        const options = this.props.projectUserTypes.map(projectUserType => {
+            return {
+                value: projectUserType.id,
+                label: projectUserType.name
+            }
+        })
         const {numUsers} = this.state;
         const users = []
         for (var i = 0; i < numUsers; i+=1) {
-            users.push(<UserType selectValue={this.props.projectUserTypes}/>)
+            users.push(<UserType key={i} selectValue={this.props.projectUserTypes} options={options} />)
         }
 
         return (
@@ -156,6 +174,7 @@ class CreateProject extends React.Component {
                         {this.renderInputs()}                        
                         {users}
                         <Button onClick={this.addUser}>+</Button>           
+                        <Button onClick={this.remUser}>-</Button>           
                         <Button
                             type="success"
                             onClick={this.createProjectHandler}

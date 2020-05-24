@@ -203,7 +203,6 @@ class CreateTask extends React.Component {
                 label: user.email
             }
         })
-
         return (
             <div className={classes.CreateTask}>
                 <div>

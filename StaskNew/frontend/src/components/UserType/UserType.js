@@ -1,9 +1,9 @@
 import React from 'react';
 import Input from '../UI/Input/Input';
-import Button from '../UI/Button/Button'
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 import classes from './UserType.css'
+
 const UserType = props => {
     
         const animatedComponents = makeAnimated();
@@ -18,6 +18,7 @@ const UserType = props => {
                     <Select
                         closeMenuOnSelect={false}
                         defaultValue={props.selectValue}
+                        options={props.options}
                     />
                 </div>
             </div>

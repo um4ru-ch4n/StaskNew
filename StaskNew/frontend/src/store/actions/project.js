@@ -1,5 +1,5 @@
 import axios from '../../axios/axios-stask'
-import {PROJECT_ERROR, USER_PROJECTS_LIST, CLEAR_USER_PROJECTS, CURRENT_PROJECT, CLEAR_CURRENT_PROJECT, PROJECTS_USERS_LIST } from './actionTypes'
+import {PROJECT_ERROR, USER_PROJECTS_LIST, CLEAR_USER_PROJECTS, CURRENT_PROJECT, CLEAR_CURRENT_PROJECT, PROJECTS_USERS_LIST, PROJECT_USER_TYPES_LIST } from './actionTypes'
 
 export function createProject(formControls) {
     return async dispatch => {
@@ -93,7 +93,7 @@ export function fetchProjectUserTypes() {
 
 export function projectUserTypesList(projectUserTypes) {
     return {
-        type: PROJECTS_USERS_LIST,
+        type: PROJECT_USER_TYPES_LIST,
         projectUserTypes: projectUserTypes
     }
 }
