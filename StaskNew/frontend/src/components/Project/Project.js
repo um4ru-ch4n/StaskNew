@@ -48,7 +48,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         clearCurrentProject: () => dispatch(clearCurrentProject()),
-        fetchProjectUsers: (projectId) => dispatch(fetchProjectUsers(projectId))
+        fetchProjectUsers: (projectId) => dispatch(fetchProjectUsers(projectId)),
     };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Project);

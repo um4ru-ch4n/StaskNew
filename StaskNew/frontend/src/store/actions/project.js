@@ -69,6 +69,35 @@ export function fetchProjectUsers(projectId) {
     }
 }
 
+export function fetchProjectUserTypes() {
+    return async dispatch => {
+        let url = "projectuserstypes/"
+        const token = localStorage.getItem("token")
+        const options = {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Token ' + token,
+            },
+            url: url
+        };
+        
+        await axios(options)
+            .then(response => {
+                dispatch(projectUserTypesList(response.data))
+            })
+            .catch((error) => {
+                dispatch(projectError("Ошибка получения списка типов"));
+            })
+    }
+}
+
+export function projectUserTypesList(projectUserTypes) {
+    return {
+        type: PROJECTS_USERS_LIST,
+        projectUserTypes: projectUserTypes
+    }
+}
+
 export function setCurrentProject(projectId) {
     return {
         type: CURRENT_PROJECT,

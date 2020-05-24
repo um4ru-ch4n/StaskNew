@@ -17,19 +17,27 @@ class CreateProjectAPI(generics.GenericAPIView):
     serializer_class = ProjectSerializer
 
     def post(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        project = serializer.save()
+        if "users" in request.data.keys():
+            serializer = self.get_serializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            project = serializer.save()
 
-        projectUsers = list()
-        if project:
+            projectUsers = list()
             projectUsers.append(ProjectUsers(user=request.user, project=project, user_type=ProjectUsersTypes.objects.get(name="Создатель")))
             for user in request.data["users"]:
-                projectUsers.append(ProjectUsers(user=Account.objects.get(
-                    email=user["email"]), project=project, user_type=ProjectUsersTypes.objects.create(name=user["type"])))
+                try:
+                    projectUsers.append(ProjectUsers(user=Account.objects.get(email=user["email"]), project=project, user_type=ProjectUsersTypes.objects.get(name=user["type"])))
+                except Exception as e:
+                    return Response(e.args)
 
             for projectUser in projectUsers:
                 projectUser.save(projectUser)
+        else:
+            return Response({
+            "users": [
+                "Это поле обязательно"
+            ]
+        })
 
         return Response({
             "project": ProjectSerializer(project, context=self.get_serializer_context()).data,
