@@ -1,10 +1,11 @@
-import { PROJECT_ERROR, USER_PROJECTS_LIST, CLEAR_USER_PROJECTS, CURRENT_PROJECT, CLEAR_CURRENT_PROJECT, PROJECTS_USERS_LIST } from "../actions/actionTypes";
+import { PROJECT_ERROR, USER_PROJECTS_LIST, CLEAR_USER_PROJECTS, CURRENT_PROJECT, CLEAR_CURRENT_PROJECT, PROJECTS_USERS_LIST, PROJECT_USER_TYPES_LIST } from "../actions/actionTypes";
 
 const initialState = {
     projects: [],
     errorMessage: "",
     currentProject: {},
-    projectUsers: []
+    projectUsers: [],
+    projectUserTypes: []
 }
 
 export default function projectReducer(state = initialState, action) {
@@ -40,6 +41,11 @@ export default function projectReducer(state = initialState, action) {
             return {
                 ...state,
                 projectUsers: action.projectUsers
+            };
+        case PROJECT_USER_TYPES_LIST:
+            return {
+                ...state,
+                projectUserTypes: action.projectUserTypes
             };
         case CLEAR_USER_PROJECTS:
             return initialState;

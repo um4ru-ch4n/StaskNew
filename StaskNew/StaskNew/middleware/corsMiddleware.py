@@ -6,7 +6,7 @@ class open_access_middleware:
     def __call__(self, request):
         response = self.get_response(request)
         response["Access-Control-Allow-Origin"] = "http://localhost:3000"
-        response["Access-Control-Allow-Headers"] = "X-PINGOTHER, Content-Type, Authorization"
-        response["Access-Control-Allow-Methods"] = "POST, GET, OPTIONS "
+        response["Access-Control-Allow-Headers"] = "Origin, Content-Type, Accept, Authorization, X-Request-With, X-PINGOTHER"
+        response["Access-Control-Allow-Methods"] = "POST, GET, OPTIONS, PUT, DELETE"
 
         return response

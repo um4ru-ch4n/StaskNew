@@ -59,7 +59,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         fetchTasks: (projectId) => dispatch(fetchTasks(projectId)),
-        setCurrentTask: (taskId) => dispatch(setCurrentTask(taskId))
+        setCurrentTask: (taskId) => dispatch(setCurrentTask(taskId)),
     };
 }
 
