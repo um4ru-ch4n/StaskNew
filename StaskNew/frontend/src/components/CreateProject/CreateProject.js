@@ -3,7 +3,7 @@ import classes from './CreateProject.css'
 import Input from '../../components/UI/Input/Input'
 import Button from '../../components/UI/Button/Button'
 import { connect } from 'react-redux'
-import { createProject } from '../../store/actions/project'
+import { fetchProjectUserTypes, createProject } from '../../store/actions/project'
 import UserType from '../UserType/UserType'
 class CreateProject extends React.Component {
     state = {
@@ -144,8 +144,9 @@ class CreateProject extends React.Component {
         const {numUsers} = this.state;
         const users = []
         for (var i = 0; i < numUsers; i+=1) {
-            users.push(<UserType/>)
+            users.push(<UserType selectValue={this.props.projectUserTypes}/>)
         }
+
         return (
             <div className={classes.CreateProject}>
                 <div>
@@ -169,10 +170,17 @@ class CreateProject extends React.Component {
     }
 }
 
+function mapStateToProps(state) {
+    return {
+        projectUserTypes: state.projectReducer.projectUserTypes
+    };
+}
+
 function mapDispatchToProps(dispatch) {
     return {
-        createProject: (fields) => dispatch(createProject(fields))
+        createProject: (fields) => dispatch(createProject(fields)),
+        fetchProjectUserTypes: () => dispatch(fetchProjectUserTypes())
     }
 }
 
-export default connect(null, mapDispatchToProps)(CreateProject);
+export default connect(mapStateToProps, mapDispatchToProps)(CreateProject);
