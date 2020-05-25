@@ -46,7 +46,7 @@ class CreateProject extends React.Component {
             }
         },
         numUsers: 1,
-        users: []
+        types: []
     }
 
     UNSAFE_componentWillMount() {
@@ -106,12 +106,12 @@ class CreateProject extends React.Component {
     }
 
     onChangeUsersSelectHandler = (event) => {
-        const {users} = this.state;
+        
+        const {types,numUsers} = this.state;
         const {id,label} = event;
-        console.log(users.length)
-        users[id] = label
-        this.setState({users});
-        console.log(id,this.state.users)
+        types[id] = label
+        this.setState({types});
+
     }
 
     validateControl(value, validation) {
@@ -184,7 +184,6 @@ class CreateProject extends React.Component {
                 onChangeUsersInputHandler={(event) => this.onChangeUsersInputHandler(event)}
                 onChangeUsersSelectHandler={(event) => this.onChangeUsersSelectHandler(event)}
                 cls={`ut-${i}`}
-                id = {`ut-${i}`}
             />)
         }
         return (
