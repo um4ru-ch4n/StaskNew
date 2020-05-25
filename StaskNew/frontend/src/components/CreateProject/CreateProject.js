@@ -105,10 +105,7 @@ class CreateProject extends React.Component {
     }
 
     onChangeUsersSelectHandler = (event) => {
-        const {userstypes} = this.state;
-        userstypes.push(event.label)
-        this.setState({userstypes})
-        console.log(event)
+        
     }
 
     validateControl(value, validation) {
