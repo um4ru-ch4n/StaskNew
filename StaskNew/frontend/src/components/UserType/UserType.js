@@ -18,6 +18,7 @@ const UserType = props => {
                 <div className={classes.SelectGroup}>
                     <label style={{margin: '0',paddingBottom: '2px',width: '220px'}}>Тип пользователя</label>
                     <Select
+                        component = {animatedComponents}
                         closeMenuOnSelect={true}
                         defaultValue={props.selectValue}
                         options={props.options}

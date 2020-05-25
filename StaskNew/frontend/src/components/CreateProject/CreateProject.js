@@ -101,10 +101,13 @@ class CreateProject extends React.Component {
 
     onChangeUsersInputHandler = (event) => {
         // const {usersInputSelect} = this.state
-        console.log(event.target.value, event.target.className)
+        
     }
 
     onChangeUsersSelectHandler = (event) => {
+        const {userstypes} = this.state;
+        userstypes.push(event.label)
+        this.setState({userstypes})
         console.log(event)
     }
 
@@ -162,29 +165,26 @@ class CreateProject extends React.Component {
     }
 
     render() {
-        const options = (ind) => {
-            return this.props.projectUserTypes.map((projectUserType) => {
+        const options = this.props.projectUserTypes.map((projectUserType, index) => {
                 return {
                     value: projectUserType.id,
                     label: projectUserType.name,
-                    string: ind
+                    id: index
                 }
             })
-        }
-        console.log(options(0))
+        
         const { numUsers } = this.state;
         const users = []
         for (var i = 0; i < numUsers; i++) {
             users.push(<UserType
                 key={i}
-                selectValue={options[0]}
-                options={(i) => this.options(i)}
+                options={options}
                 onChangeUsersInputHandler={(event) => this.onChangeUsersInputHandler(event)}
                 onChangeUsersSelectHandler={(event) => this.onChangeUsersSelectHandler(event)}
                 cls={`ut-${i}`}
+                id = {`ut-${i}`}
             />)
         }
-
         return (
             <div className={classes.CreateProject}>
                 <div>
