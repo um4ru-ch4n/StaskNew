@@ -45,7 +45,8 @@ class CreateProject extends React.Component {
                 }
             }
         },
-        numUsers: 1
+        numUsers: 1,
+        users: []
     }
 
     UNSAFE_componentWillMount() {
@@ -105,7 +106,12 @@ class CreateProject extends React.Component {
     }
 
     onChangeUsersSelectHandler = (event) => {
-        console.log(event)
+        const {users} = this.state;
+        const {id,label} = event;
+        console.log(users.length)
+        users[id] = label
+        this.setState({users});
+        console.log(id,this.state.users)
     }
 
     validateControl(value, validation) {
@@ -167,7 +173,7 @@ class CreateProject extends React.Component {
                 return {
                     value: projectUserType.id,
                     label: projectUserType.name,
-                    id: `${numUsers}`
+                    id: `${numUsers - 1}`
                 }
             })
         const users = []
