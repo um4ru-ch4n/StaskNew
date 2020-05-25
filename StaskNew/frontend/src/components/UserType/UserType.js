@@ -12,13 +12,17 @@ const UserType = props => {
                 <Input
                     type='email'
                     label='Участник проекта'
+                    onChange={props.onChangeUsersInputHandler}
+                    className={props.cls}
                 />
                 <div className={classes.SelectGroup}>
                     <label style={{margin: '0',paddingBottom: '2px',width: '220px'}}>Тип пользователя</label>
                     <Select
-                        closeMenuOnSelect={false}
+                        closeMenuOnSelect={true}
                         defaultValue={props.selectValue}
                         options={props.options}
+                        onChange={props.onChangeUsersSelectHandler}
+                        className={props.cls}
                     />
                 </div>
             </div>
