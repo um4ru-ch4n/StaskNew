@@ -105,7 +105,7 @@ class CreateProject extends React.Component {
     }
 
     onChangeUsersSelectHandler = (event) => {
-        
+        console.log(event)
     }
 
     validateControl(value, validation) {
@@ -162,15 +162,14 @@ class CreateProject extends React.Component {
     }
 
     render() {
-        const options = this.props.projectUserTypes.map((projectUserType, index) => {
+        const { numUsers } = this.state;
+        const options = this.props.projectUserTypes.map((projectUserType) => {
                 return {
                     value: projectUserType.id,
                     label: projectUserType.name,
-                    id: index
+                    id: `${numUsers}`
                 }
             })
-        
-        const { numUsers } = this.state;
         const users = []
         for (var i = 0; i < numUsers; i++) {
             users.push(<UserType
