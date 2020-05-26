@@ -1,13 +1,10 @@
 import React from 'react';
 import Input from '../UI/Input/Input';
-import Select from 'react-select';
-import makeAnimated from 'react-select/animated';
 import classes from './UserType.css'
-
+import Select from '../UI/Select/Select'
 const UserType = props => {
     
-        const animatedComponents = makeAnimated();
-        return(
+        return (
             <div className={classes.UserType}>
                 <Input
                     type='email'
@@ -18,12 +15,9 @@ const UserType = props => {
                 <div className={classes.SelectGroup}>
                     <label style={{margin: '0',paddingBottom: '2px',width: '220px'}}>Тип пользователя</label>
                     <Select
-                        component = {animatedComponents}
-                        closeMenuOnSelect={true}
-                        defaultValue={props.selectValue}
+                        className={props.cls}
                         options={props.options}
                         onChange={props.onChangeUsersSelectHandler}
-                        className={props.cls}
                     />
                 </div>
             </div>
