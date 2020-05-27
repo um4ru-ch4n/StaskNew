@@ -46,6 +46,12 @@ class CreateProject extends React.Component {
             }
         },
         numUsers: 1,
+        usersInputSelect: [
+            {
+                email: "",
+                type: ""
+            },
+        ],
         types: []
     }
 
@@ -55,6 +61,7 @@ class CreateProject extends React.Component {
 
     createProjectHandler = () => {
         const formControls = { ...this.state.formControls }
+        const {usersInputSelect} = this.state
 
         let isFormValid = true
 
@@ -74,8 +81,17 @@ class CreateProject extends React.Component {
             fields[name] = formControls[name].value
         })
 
+        usersInputSelect.forEach(userInputSelect => {
+            let valid = this.validateControl(userInputSelect, {
+                isUserInputSelect: true
+            })
+            isFormValid = valid && isFormValid
+        });
+
+        fields["users"] = new Array(...usersInputSelect)
+
         if (isFormValid) {
-            // this.props.createProject(fields);
+            this.props.createProject(fields);
 
         } else {
             // TODO: Алерт об ошибке валидации
@@ -101,12 +117,22 @@ class CreateProject extends React.Component {
     }
 
     onChangeUsersInputHandler = (event) => {
-        // const {usersInputSelect} = this.state
-        
+        const { usersInputSelect } = this.state
+        const users = new Array( ...usersInputSelect )
+        users[event.target.className.slice(3)].email = event.target.value
+        this.setState({
+            usersInputSelect: users
+        })
+
     }
 
     onChangeUsersSelectHandler = (event) => {
-        console.log(event.target.id,event.target.value)
+        const { usersInputSelect } = this.state
+        const users = new Array( ...usersInputSelect )
+        users[event.target.id.slice(3)].type = event.target.value
+        this.setState({
+            usersInputSelect: users
+        })
     }
 
     validateControl(value, validation) {
@@ -124,6 +150,10 @@ class CreateProject extends React.Component {
             if (validation.maxLength) {
                 isValid = value.length <= validation.maxLength && isValid;
             }
+        }
+        if (validation.isUserInputSelect) {
+            isValid = value.email.trim() !== '' && isValid;
+            isValid = value.type.trim() !== '' && isValid;
         }
 
         return isValid;
@@ -150,26 +180,39 @@ class CreateProject extends React.Component {
 
     addUser = event => {
         event.preventDefault();
-        const { numUsers } = this.state;
-        this.setState({ numUsers: numUsers + 1 });
+        const { numUsers, usersInputSelect } = this.state;
+        const us = new Array( ...usersInputSelect )
+        us.push({
+            email: "",
+            type: ""
+        })
+        this.setState({
+            numUsers: numUsers + 1,
+            usersInputSelect: us
+        });
     }
 
     remUser = event => {
         event.preventDefault();
-        const { numUsers } = this.state;
+        const { numUsers, usersInputSelect } = this.state;
         if (numUsers > 0) {
-            this.setState({ numUsers: numUsers - 1 });
+            const us = new Array( ...usersInputSelect )
+            us.pop()
+            this.setState({
+                numUsers: numUsers - 1,
+                usersInputSelect: us
+            });
         }
     }
 
     render() {
         const { numUsers } = this.state;
         const options = this.props.projectUserTypes.map((projectUserType) => {
-                return {
-                    value: projectUserType.id,
-                    label: projectUserType.name,
-                }
-            })
+            return {
+                value: projectUserType.id,
+                label: projectUserType.name,
+            }
+        })
         const users = []
         for (var i = 0; i < numUsers; i++) {
             users.push(<UserType
