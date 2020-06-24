@@ -203,7 +203,6 @@ class CreateTask extends React.Component {
                 label: user.email
             }
         })
-
         return (
             <div className={classes.CreateTask}>
                 <div>
@@ -211,7 +210,7 @@ class CreateTask extends React.Component {
                     <form onSubmit={this.submitHandler} className={classes.CreateTaskForm}>
 
                         {this.renderInputs()}
-
+                        <label style={{fontWeight: 'bold'}}>Выбор участника</label>
                         <Select
                             closeMenuOnSelect={false}
                             components={animatedComponents}

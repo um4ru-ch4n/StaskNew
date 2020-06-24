@@ -1,5 +1,6 @@
-.card {
-    width:50%;
-    margin: 0 auto;
-    padding-top: 10%;
+.Project {
+    display: inline;
+}
+.jumbotron {
+    width:100%;
 }

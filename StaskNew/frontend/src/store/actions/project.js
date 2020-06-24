@@ -1,5 +1,5 @@
 import axios from '../../axios/axios-stask'
-import {PROJECT_ERROR, USER_PROJECTS_LIST, CLEAR_USER_PROJECTS, CURRENT_PROJECT, CLEAR_CURRENT_PROJECT, PROJECTS_USERS_LIST } from './actionTypes'
+import {PROJECT_ERROR, USER_PROJECTS_LIST, CLEAR_USER_PROJECTS, CURRENT_PROJECT, CLEAR_CURRENT_PROJECT, PROJECTS_USERS_LIST, PROJECT_USER_TYPES_LIST } from './actionTypes'
 
 export function createProject(formControls) {
     return async dispatch => {
@@ -14,7 +14,6 @@ export function createProject(formControls) {
             data: JSON.stringify(formControls),
             url: url
         };
-        console.log(options.data)
         await axios(options)
             .catch(error => {
                 dispatch(projectError("Ошибка создания проекта"));
@@ -67,6 +66,35 @@ export function fetchProjectUsers(projectId) {
             .catch(error => {
                 dispatch(projectError("Ошибка получения списка пользователей"));
             })
+    }
+}
+
+export function fetchProjectUserTypes() {
+    return async dispatch => {
+        let url = "projectuserstypes/"
+        const token = localStorage.getItem("token")
+        const options = {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Token ' + token,
+            },
+            url: url
+        };
+        
+        await axios(options)
+            .then(response => {
+                dispatch(projectUserTypesList(response.data))
+            })
+            .catch((error) => {
+                dispatch(projectError("Ошибка получения списка типов"));
+            })
+    }
+}
+
+export function projectUserTypesList(projectUserTypes) {
+    return {
+        type: PROJECT_USER_TYPES_LIST,
+        projectUserTypes: projectUserTypes
     }
 }
 

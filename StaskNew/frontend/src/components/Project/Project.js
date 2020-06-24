@@ -3,24 +3,36 @@ import { connect } from 'react-redux';
 import { clearCurrentProject, fetchProjectUsers } from '../../store/actions/project';
 import CreateTask from '../CreateTask/CreateTask';
 import classes from './Project.css'
+import UserTasks from '../UserTasks/UserTasks'
 
 class Project extends Component {
-    componentWillUnmount() {
+    /* componentWillUnmount() {
         this.props.clearCurrentProject()
-    }
+    } */
 
     UNSAFE_componentWillMount() {
         this.props.fetchProjectUsers(this.props.currentProject.id)
+        const pExist = this.props.location.pathname.match(/\d+/g);
+        if (pExist[0] !== this.props.currentProject.id + ''){
+            this.props.history.push('/user_projects');
+        }
     }
+
 
     render() {
         const { title, theme, description } = this.props.currentProject;
         return (
-            <div>
-                <h1>Проект {title}</h1>
-                <h1>Тема {theme}</h1>
-                <h1>Описание {description}</h1>
-                <CreateTask projectUsers={this.props.projectUsers} />
+            <div className={classes.Project}>
+                <div className="jumbotron">
+                    <h2 className="display-4">{title}</h2>
+                    <p className="lead">{theme}</p>
+                    <hr className="my-4" />
+                    <p>{description}</p>
+                    <div style={{ display: "flex" }}>
+                        <UserTasks />
+                        <CreateTask projectUsers={this.props.projectUsers} />
+                    </div>
+                </div>
             </div>
         )
     }

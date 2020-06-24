@@ -2,10 +2,13 @@ import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { fetchProjects, setCurrentProject } from '../../store/actions/project';
-import classes from './UserProjects.css'
-
+import classes from './UserProjects.css' 
 class UserProjects extends Component {
 
+    UNSAFE_componentWillMount() {
+        this.props.fetchProjects();
+    }
+    
     onProjectClickHandler = (projectId) => {
         this.props.setCurrentProject(projectId)
     }
@@ -17,7 +20,7 @@ class UserProjects extends Component {
                     key={project.id}
                 >
                     <NavLink
-                        to={'user_projects/project/' + project.id}
+                        to={'user_projects/' + project.id}
                         onClick={() => this.onProjectClickHandler(project.id)}
                     >
                         {project.title}
@@ -25,10 +28,6 @@ class UserProjects extends Component {
                 </li>
             );
         })
-    }
-
-    UNSAFE_componentWillMount() {
-        this.props.fetchProjects();
     }
 
     render() {

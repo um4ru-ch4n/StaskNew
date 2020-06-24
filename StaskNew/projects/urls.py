@@ -26,4 +26,5 @@ urlpatterns = [
     path('api/user_projects', api.GetUserProjectsAPI.as_view()),
     path('api/project_tasks', api.GetTasksAPI.as_view()),
     path('api/project_users', api.GetProjectUsersAPI.as_view()),
+    path('api/task_todos', api.GetTodosAPI.as_view()),
 ]

@@ -36,6 +36,7 @@ export function fetchTasks(projectId) {
         const prId = {
             id: projectId,
         }
+        
         let url = "project_tasks"
         const token = localStorage.getItem("token")
         const options = {
@@ -65,7 +66,7 @@ export function setCurrentTask(taskId) {
     }
 }
 
-export function clearCurrentProject() {
+export function clearCurrentTask() {
     return {
         type: CLEAR_CURRENT_TASK,
     }

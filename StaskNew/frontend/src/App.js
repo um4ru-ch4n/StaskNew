@@ -11,6 +11,7 @@ import Logout from './components/Logout/Logout'
 import CreateProject from './components/CreateProject/CreateProject'
 import UserProjects from './components/UserProjects/UserProjects'
 import Project from './components/Project/Project'
+import Task from './components/Task/Task'
 
 class App extends React.Component {
 	UNSAFE_componentWillMount() {
@@ -31,7 +32,8 @@ class App extends React.Component {
 			routers = (
 				<Switch>
 					<Route path="/create_project/" component={CreateProject} />
-					<Route path="/user_projects/project/:id/" component={Project}/>
+					<Route path="/user_projects/:id/:id/" component={Task}/>
+					<Route path="/user_projects/:id/" component={Project}/>
 					<Route path="/user_projects/" component={UserProjects} />
 					<Route path="/logout/" component={Logout} />
 					<Route path="/" exact component={Home} />
